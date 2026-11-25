@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Import source viewer</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.ln{height:7px;border-radius:2px;background:#e1e6ea;margin:0 0 11px}
+.ib{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #cbd1d6;border-radius:4px;background:#ffffff;color:#252b32}
+select{-webkit-appearance:none;appearance:none;padding-right:34px !important;background-image:url(/_blob/6de67599c7c5d719bba71e3ae53a6245) !important;background-repeat:no-repeat !important;background-position:right 12px center !important;background-size:12px 12px !important}
+</style>
+</helmet>
+<aside aria-label="Source document" style="width: 480px; height: 100%; min-height: 788px; box-sizing: border-box; display: flex; flex-direction: column; border-left: 1px solid #e0e3e6; background: #f5f7f8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45; color: #252b32">
+<div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; background: #ffffff; border-bottom: 1px solid #e0e3e6">
+<select aria-label="Source file" style="flex: 1 1 auto; min-width: 0; height: 32px; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit; font-size: 13px; background: #ffffff"><option>{{d.file}}</option></select>
+<span style="font-size: 13px; color: #606972; white-space: nowrap">{{d.page}}</span>
+<button type="button" class="ib" aria-label="Previous page"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<button type="button" class="ib" aria-label="Next page"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+<div style="flex: 1 1 0; overflow: auto; padding: 24px">
+<div style="position: relative; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); padding: 36px 34px; min-height: 600px; box-sizing: border-box">
+<div style="font-size: 11px; font-weight: 600; letter-spacing: 0.3px; color: #606972; margin-bottom: 18px">{{d.heading}}</div>
+<div class="ln" style="width: 78%"></div><div class="ln" style="width: 64%"></div><div class="ln" style="width: 70%; margin-bottom: 26px"></div>
+<div class="ln" style="width: 40%"></div>
+<div style="margin: 4px -6px 18px; padding: 6px; border: 2px solid #346f99; border-radius: 3px; background: #eaf2f8; font-size: 12px">{{d.value}}</div>
+<div class="ln" style="width: 82%"></div><div class="ln" style="width: 75%"></div><div class="ln" style="width: 58%; margin-bottom: 26px"></div>
+<div class="ln" style="width: 45%"></div><div class="ln" style="width: 80%"></div><div class="ln" style="width: 66%"></div><div class="ln" style="width: 72%"></div><div class="ln" style="width: 50%; margin-bottom: 26px"></div>
+<div class="ln" style="width: 84%"></div><div class="ln" style="width: 60%"></div><div class="ln" style="width: 76%"></div>
+</div>
+</div>
+</aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"doc":{"editor":"enum","options":["ar2024","scan42","register","form24"],"default":"ar2024"},"$preview":{"width":480,"height":788}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const docs = {
+      ar2024: { file: 'AR 2024 Meranti.pdf', page: 'Page 2 of 9', heading: 'ANNUAL RETURN OF A COMPANY HAVING A SHARE CAPITAL', value: 'Registered address: 13 Jalan Contoh, 50450 Kuala Lumpur' },
+      scan42: { file: 'Scan_0042.pdf', page: 'Page 1 of 2', heading: 'NOTIFICATION OF CHANGE IN THE REGISTER OF DIRECTORS', value: 'Tan Mei Ling, 750101-14-5678, appointed 2 May 2019' },
+      register: { file: 'Meranti members 2025.xlsx', page: 'Sheet Members, row 4', heading: 'REGISTER OF MEMBERS', value: 'Lim Wei Jie, 900203-10-1234, Ordinary, 60,000' },
+      form24: { file: 'Form 24 (2).pdf', page: 'Page 1 of 1', heading: 'RETURN OF ALLOTMENT OF SHARES', value: '40,000 ordinary shares allotted 9 Jan 2023' }
+    };
+    return { d: docs[this.props.doc ?? 'ar2024'] ?? docs.ar2024 };
+  }
+}
+</script>
+</body>
+</html>

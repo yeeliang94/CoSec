@@ -32,6 +32,9 @@ export default function Companies() {
     <>
       <PageHeader title="Companies">
         <div className="header-actions">
+          <Link className="section-link" href="/companies/imports">
+            Import records
+          </Link>
           {data.actor.capabilities.includes('prepare_job') ? (
             <button type="button" className="primary" onClick={() => setAdding(true)}>
               <Icon kind="plus" />

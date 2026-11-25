@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { assertCapability } from '../domain/access';
+import { assertCapability, DomainError } from '../domain/access';
 import type { Actor, Settings } from '../domain/model';
 import {
   getSettings,
@@ -38,8 +38,41 @@ export async function getWorkspaceSupport(actor: Actor) {
   };
 }
 
+const count = (min: number, max: number) => z.coerce.number().int().min(min).max(max);
+const importSettingsAction = z.object({
+  ...base,
+  action: z.literal('import'),
+  // Empty switches bulk import off. Only https, except a local test gateway on this computer.
+  gatewayUrl: z
+    .string()
+    .trim()
+    .max(500)
+    .default('')
+    .refine(
+      (v) =>
+        !v || /^https:\/\/[^\s]+$/.test(v) || /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?\//.test(v),
+      'Enter the gateway address starting with https://.',
+    ),
+  model: z.string().trim().max(200).default(''),
+  providerHeader: z.string().trim().max(100).default(''),
+  companiesAtOnce: count(1, 20),
+  maxTurns: count(5, 200),
+  maxMinutes: count(5, 240),
+  maxTokensPerCompany: count(10_000, 50_000_000),
+  dailyTokenLimit: count(100_000, 1_000_000_000),
+});
 export async function applySettingsAction(actor: Actor, input: unknown) {
   assertCapability(actor, 'manage_catalogue');
+  if ((input as { action?: string } | null)?.action === 'import') {
+    const { expectedRevision, requestId, action, ...values } = importSettingsAction.parse(input);
+    void action;
+    if (values.gatewayUrl && !values.model)
+      throw new DomainError('Enter the model name the gateway uses.');
+    return mutateSettings(actor, expectedRevision, requestId, (settings: Settings) => ({
+      ...settings,
+      importSettings: values,
+    }));
+  }
   const action = settingsAction.parse(input);
   return mutateSettings(actor, action.expectedRevision, action.requestId, (settings: Settings) => ({
     ...settings,

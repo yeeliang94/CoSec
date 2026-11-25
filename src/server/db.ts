@@ -69,6 +69,7 @@ function enqueue<T>(fn: () => Promise<T>): Promise<T> {
  * writers until commit. Keep slow work (rendering, file I/O) outside.
  */
 export function transaction<T>(fn: (tx: Transaction) => Promise<T> | T): Promise<T> {
+  if (joined.getStore()) return savepoint(fn);
   return enqueue(async () => {
     connections.writer.exec('BEGIN IMMEDIATE');
     try {
@@ -81,6 +82,34 @@ export function transaction<T>(fn: (tx: Transaction) => Promise<T> | T): Promise
     }
   });
 }
+// Inside `atomically`, each `transaction` call becomes a savepoint of the one open transaction,
+// so existing record writers compose into a single all-or-nothing change.
+const joined = new AsyncLocalStorage<true>();
+let savepoints = 0;
+async function savepoint<T>(fn: (tx: Transaction) => Promise<T> | T): Promise<T> {
+  const name = `sp_${++savepoints}`;
+  connections.writer.exec(`SAVEPOINT ${name}`);
+  try {
+    const result = await fn(writerDb);
+    connections.writer.exec(`RELEASE ${name}`);
+    return result;
+  } catch (error) {
+    if (connections.writer.inTransaction) {
+      connections.writer.exec(`ROLLBACK TO ${name}`);
+      connections.writer.exec(`RELEASE ${name}`);
+    }
+    throw error;
+  }
+}
+/**
+ * Runs `fn` in one write transaction in which every nested `transaction` call (for example a
+ * record writer) joins as a savepoint. Either all of it commits or none of it does. Writers'
+ * own checks, audit entries and request keys still run; only the commit is shared.
+ */
+export function atomically<T>(fn: (tx: Transaction) => Promise<T>): Promise<T> {
+  return transaction((tx) => joined.run(true, () => fn(tx)));
+}
+
 /**
  * Reads one consistent WAL snapshot without reserving the write lock. Each call owns its
  * read-only connection, so overlapping async callbacks cannot join or end each other's snapshot.

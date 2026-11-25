@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Imports – CoSec Workspace</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 10px 0;border-bottom:1px solid #e0e3e6}
+td{padding:16px 10px 16px 0;border-bottom:1px solid #e7eaed;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+<div style="display: flex; min-height: 900px; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="companies" hint-size="208px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; padding: 30px 32px 50px; box-sizing: border-box">
+<a href="Companies.dc.html" style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #606972"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Companies</a>
+<header style="display: flex; align-items: center; justify-content: space-between; margin-top: 4px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.45px; line-height: 1.3">Imports</h1>
+<a href="ImportNew.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; box-sizing: border-box; border-radius: 4px; background: #284b5c; color: #ffffff; font-weight: 500; text-decoration: none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New import</a>
+</header>
+<table style="width: 100%; border-collapse: collapse; margin-top: 32px">
+<thead><tr><th>Import</th><th>Started</th><th class="num">Companies</th><th class="num">Applied</th><th style="padding-right: 0">Status</th></tr></thead>
+<tbody>
+<tr><td><a href="ImportBatch.dc.html" style="font-weight: 600">Client files, batch 2</a></td><td>24 Nov 2026</td><td class="num">38</td><td class="num">1</td><td style="padding-right: 0">5 ready for you</td></tr>
+<tr><td><a href="ImportBatch.dc.html" style="font-weight: 600">Client files, batch 1</a></td><td>21 Nov 2026</td><td class="num">24</td><td class="num">20</td><td style="padding-right: 0">Paused</td></tr>
+<tr><td><a href="ImportBatch.dc.html" style="font-weight: 600">Linden Ventures, 2025 filings</a></td><td>18 Nov 2026</td><td class="num">1</td><td class="num">1</td><td style="padding-right: 0">Finished</td></tr>
+</tbody>
+</table>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

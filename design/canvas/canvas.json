@@ -66,6 +66,20 @@
       "w": 420,
       "text": "Sidebar, CompanyHeader, CompanyDetails and ResolutionPreview are shared parts. Edit them once and every screen that uses them updates. Popups are drawn over the page they open from.",
       "fill": "blue"
+    },
+    "imp": {
+      "x": 0,
+      "y": 9700,
+      "text": "Bulk import",
+      "kind": "title1",
+      "maxW": 20000
+    },
+    "imphow": {
+      "x": 0,
+      "y": 9830,
+      "w": 1400,
+      "text": "Choose one client folder with a subfolder per company. Each company folder gets its own agent, a few running at a time (Settings: Companies read at a time). An agent reads only its folder, suggests values for that one company with the file and page they came from, sets aside files about another company, and asks only where files disagree or something is missing. Nothing is saved until a person applies a company; share entries go in as drafts and the opening review stays with someone else. Entry point: an Import records button on the Companies page.",
+      "fill": "blue"
     }
   },
   "boards": {
@@ -450,7 +464,7 @@
       "x": 0,
       "y": 7800,
       "w": 1440,
-      "h": 900,
+      "h": 1500,
       "title": "Settings",
       "expand": "fill"
     },
@@ -769,6 +783,152 @@
       "w": 1440,
       "h": 900,
       "title": "New company: review"
+    },
+    "Imports.dc.html": {
+      "x": 0,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Imports list",
+      "expand": "fill"
+    },
+    "ImportNew.dc.html": {
+      "x": 1520,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "New import drawer"
+    },
+    "ImportBatch.dc.html": {
+      "x": 3040,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Import: companies",
+      "expand": "fill"
+    },
+    "ImportBatchFiles.dc.html": {
+      "x": 4560,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Import: files",
+      "expand": "fill"
+    },
+    "ImportSort.dc.html": {
+      "x": 6080,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Files that look like another company"
+    },
+    "ImportReviewQuestions.dc.html": {
+      "x": 7600,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Company review: questions"
+    },
+    "ImportReview.dc.html": {
+      "x": 9120,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Company review: company details"
+    },
+    "ImportReviewPeople.dc.html": {
+      "x": 10640,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Company review: people and roles"
+    },
+    "ImportReviewShares.dc.html": {
+      "x": 12160,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Company review: shares and charges"
+    },
+    "ImportApply.dc.html": {
+      "x": 13680,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Apply to records dialog"
+    },
+    "ImportReviewHeader.dc.html": {
+      "x": 15200,
+      "y": 10000,
+      "w": 1384,
+      "h": 112,
+      "title": "Import review header (shared)"
+    },
+    "ImportReviewSteps.dc.html": {
+      "x": 15200,
+      "y": 10190,
+      "w": 200,
+      "h": 700,
+      "title": "Import review sections (shared)"
+    },
+    "ImportSource.dc.html": {
+      "x": 15480,
+      "y": 10190,
+      "w": 480,
+      "h": 788,
+      "title": "Source viewer (shared)"
+    },
+    "ImportReviewAddresses.dc.html": {
+      "x": 7600,
+      "y": 11080,
+      "w": 1440,
+      "h": 900,
+      "title": "Company review: addresses",
+      "expand": "fill"
+    },
+    "ImportReviewBusiness.dc.html": {
+      "x": 9120,
+      "y": 11080,
+      "w": 1440,
+      "h": 900,
+      "title": "Company review: business activity",
+      "expand": "fill"
+    },
+    "ImportReviewFiles.dc.html": {
+      "x": 10640,
+      "y": 11080,
+      "w": 1440,
+      "h": 900,
+      "title": "Company review: files used",
+      "expand": "fill"
+    },
+    "ImportCorrectPerson.dc.html": {
+      "x": 12160,
+      "y": 11080,
+      "w": 1440,
+      "h": 900,
+      "title": "Correct a person"
+    },
+    "ImportCorrectRole.dc.html": {
+      "x": 13680,
+      "y": 11080,
+      "w": 1440,
+      "h": 900,
+      "title": "Correct a role"
+    },
+    "ImportCorrectShares.dc.html": {
+      "x": 15200,
+      "y": 11080,
+      "w": 1440,
+      "h": 900,
+      "title": "Correct a holding"
+    },
+    "ImportCorrectCharge.dc.html": {
+      "x": 16720,
+      "y": 11080,
+      "w": 1440,
+      "h": 900,
+      "title": "Correct a charge"
     }
   },
   "order": [
@@ -868,6 +1028,26 @@
     "Settings.dc.html",
     "SettingsUserForm.dc.html",
     "AuditLog.dc.html",
-    "SettingsNewUser.dc.html"
+    "SettingsNewUser.dc.html",
+    "Imports.dc.html",
+    "ImportNew.dc.html",
+    "ImportBatch.dc.html",
+    "ImportBatchFiles.dc.html",
+    "ImportSort.dc.html",
+    "ImportReviewQuestions.dc.html",
+    "ImportReview.dc.html",
+    "ImportReviewPeople.dc.html",
+    "ImportReviewShares.dc.html",
+    "ImportReviewAddresses.dc.html",
+    "ImportReviewBusiness.dc.html",
+    "ImportReviewFiles.dc.html",
+    "ImportCorrectPerson.dc.html",
+    "ImportCorrectRole.dc.html",
+    "ImportCorrectShares.dc.html",
+    "ImportCorrectCharge.dc.html",
+    "ImportApply.dc.html",
+    "ImportReviewHeader.dc.html",
+    "ImportReviewSteps.dc.html",
+    "ImportSource.dc.html"
   ]
 }

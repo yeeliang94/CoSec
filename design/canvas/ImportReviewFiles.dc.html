@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Meranti Trading Sdn. Bhd. – Import review, files used</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 8px 0;border-bottom:1px solid #e0e3e6}
+td{padding:11px 10px 11px 0;border-bottom:1px solid #e7eaed;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+tr.on td{background:#f0f4f6}
+.src{font-size:13px}
+.ck{width:28px}
+.nav{display:inline-flex;align-items:center;height:36px;padding:0 14px;box-sizing:border-box;border:1px solid #cbd1d6;border-radius:4px;color:#252b32;text-decoration:none}
+.same{color:#606972}
+</style>
+</helmet>
+<div style="display: flex; width: 1440px; height: 900px; overflow: hidden; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="companies" collapsed="{{yes}}" hint-size="56px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<dc-import name="ImportReviewHeader" questions="{{no}}" stray="{{yes}}" hint-size="100%,112px"></dc-import>
+<div style="flex: 1 1 0; min-height: 0; display: flex">
+<dc-import name="ImportReviewSteps" step="files" hint-size="200px,788px"></dc-import>
+<section style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<div style="flex: 1 1 0; overflow: auto; padding: 24px 32px; display: flex; flex-direction: column; gap: 40px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 600">Files used</h2>
+<table style="width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: -24px">
+<colgroup><col style="width: 32%"><col style="width: 28%"><col style="width: 8%"><col></colgroup>
+<thead><tr><th>File</th><th>Read as</th><th style="text-align: right">Pages</th><th style="padding-right: 0">Result</th></tr></thead>
+<tbody>
+<tr><td><a href="#">Meranti_Form9.pdf</a></td><td>Form 9, certificate of incorporation</td><td style="text-align: right; font-variant-numeric: tabular-nums">1</td><td style="padding-right: 0;">Used for 4 values</td></tr>
+<tr><td><a href="#">AR 2024 Meranti.pdf</a></td><td>Annual return 2024</td><td style="text-align: right; font-variant-numeric: tabular-nums">8</td><td style="padding-right: 0;">Used for 14 values</td></tr>
+<tr><td><a href="#">Scan_0042.pdf</a></td><td>Board resolution, directors</td><td style="text-align: right; font-variant-numeric: tabular-nums">2</td><td style="padding-right: 0;">Used for 6 values</td></tr>
+<tr><td><a href="#">Meranti members 2025.xlsx</a></td><td>Register of members</td><td style="text-align: right; font-variant-numeric: tabular-nums"></td><td style="padding-right: 0;">Used for 5 values</td></tr>
+<tr><td><a href="#">Cengal minutes 2023.docx</a></td><td>Board minutes</td><td style="text-align: right; font-variant-numeric: tabular-nums"></td><td style="padding-right: 0;">Looks like Cengal Sdn. Bhd.</td></tr>
+<tr><td>Old letter.doc</td><td></td><td style="text-align: right; font-variant-numeric: tabular-nums"></td><td style="padding-right: 0; color: #8f2f2f">Could not read: old Office format; save it as .xlsx or .docx</td></tr>
+</tbody>
+</table>
+</div>
+<footer style="display: flex; justify-content: space-between; padding: 14px 32px; border-top: 1px solid #e0e3e6">
+<a href="ImportReviewShares.dc.html" class="nav">Back</a>
+<span class="nav" style="color: #8a929a">Continue</span>
+</footer>
+</section>
+<dc-import name="ImportSource" doc="ar2024" hint-size="480px,788px"></dc-import>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, no: false }; }
+}
+</script>
+</body>
+</html>

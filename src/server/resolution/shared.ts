@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { currentAuditSource } from '../audit-source';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { db, transaction, type Transaction } from '../db';
@@ -87,7 +88,11 @@ export async function auditChange(
     reason: input.reason ?? null,
     sensitivity: input.sensitivity ?? 'General',
     scopeCompanyIds: input.scopeCompanyIds ?? (input.companyId ? [input.companyId] : null),
-    detail: { changes, ...(input.detail ?? {}) },
+    detail: {
+      changes,
+      ...(input.detail ?? {}),
+      ...(currentAuditSource() ? { importSource: currentAuditSource() } : {}),
+    },
     createdAt: new Date(),
   });
 }

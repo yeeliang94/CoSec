@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apply to records</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 8px 0;border-bottom:1px solid #e0e3e6}
+td{padding:10px 10px 10px 0;border-bottom:1px solid #e7eaed;white-space:nowrap}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 900px; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45; color: #252b32">
+<dc-import name="ImportReviewShares" hint-size="1440px,900px"></dc-import>
+<div style="position: absolute; inset: 0; background: rgba(28, 45, 57, 0.32)"></div>
+<div role="dialog" aria-labelledby="ap-t" style="position: absolute; top: 170px; left: 470px; width: 500px; background: #ffffff; border-radius: 6px; box-shadow: 0 16px 60px rgba(0, 0, 0, 0.15)">
+<div style="padding: 24px 28px 0">
+<h2 id="ap-t" style="margin: 0; font-size: 17px; font-weight: 600">Apply to Meranti Trading Sdn. Bhd.?</h2>
+<table style="width: 100%; border-collapse: collapse; margin-top: 20px">
+<thead><tr><th>Goes to</th><th class="num" style="padding-right: 0">Values</th></tr></thead>
+<tbody>
+<tr><td>Company details and addresses</td><td class="num" style="padding-right: 0">14</td></tr>
+<tr><td>People</td><td class="num" style="padding-right: 0">5</td></tr>
+<tr><td>Roles</td><td class="num" style="padding-right: 0">5</td></tr>
+<tr><td>Share register, as drafts</td><td class="num" style="padding-right: 0">3</td></tr>
+<tr><td>Charges</td><td class="num" style="padding-right: 0">1</td></tr>
+<tr><td>Source files, to Documents</td><td class="num" style="padding-right: 0">17</td></tr>
+</tbody>
+</table>
+<p style="margin: 16px 0 0">The opening record stays Unverified until someone else reviews it.</p>
+</div>
+<div style="display: flex; justify-content: flex-end; gap: 8px; padding: 20px 28px 24px">
+<a href="ImportReviewShares.dc.html" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; box-sizing: border-box; border: 1px solid #cbd1d6; border-radius: 4px; color: #252b32">Cancel</a>
+<a href="ImportBatch.dc.html" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; box-sizing: border-box; border-radius: 4px; background: #284b5c; color: #ffffff; font-weight: 500">Apply to records</a>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

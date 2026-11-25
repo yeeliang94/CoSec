@@ -14,6 +14,7 @@ import { defaultSettings } from '../domain/model';
 import { addOpeningPeople, type OpeningPerson } from './records/relationships';
 import { assertCapability, assertCompany, DomainError } from '../domain/access';
 export type { Transaction } from './db';
+import { currentAuditSource } from './audit-source';
 // Reads take an optional transaction. Inside a transaction, always pass it: the transaction
 // already holds a pooled connection, and borrowing a second one can exhaust the pool.
 export async function getActorById(id: string, tx?: Transaction): Promise<Actor | null> {
@@ -56,6 +57,14 @@ export async function listCompanies(actor: Actor) {
     (r) => r.data,
   );
 }
+/** Adds the current import source, if any, to an audit detail object. */
+function withSource(detail: unknown) {
+  const source = currentAuditSource();
+  if (!source) return detail;
+  return detail && typeof detail === 'object' && !Array.isArray(detail)
+    ? { ...detail, importSource: source }
+    : { value: detail ?? null, importSource: source };
+}
 export async function audit(
   actor: Actor,
   companyId: string | null,
@@ -71,7 +80,7 @@ export async function audit(
       companyId,
       action,
       subjectId,
-      detail,
+      detail: withSource(detail),
       createdAt: new Date(),
     });
   await (tx ? write(tx) : transaction(write));

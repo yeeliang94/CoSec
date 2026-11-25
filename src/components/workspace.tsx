@@ -117,6 +117,9 @@ export function Icon({ kind }: { kind: string }) {
 const APP_NAME = 'CoSec Workspace';
 const pageTitles: [RegExp, string][] = [
   [/^\/companies\/?$/, 'Companies'],
+  [/^\/companies\/imports\/?$/, 'Imports'],
+  [/^\/companies\/imports\/[^/]+\/?$/, 'Import'],
+  [/^\/companies\/imports\//, 'Import review'],
   [/^\/companies\//, 'Company'],
   [/^\/people(\/|$)/, 'People'],
   [/^\/documents(\/|$)/, 'Documents'],
@@ -152,7 +155,7 @@ export function useDocumentTitle(title: string | null | undefined) {
 }
 /** Working screens keep the document in view, so the rail narrows to icons there. */
 const FOCUS_ROUTES =
-  /^\/(resolutions\/(?!companies\/)[^/]+|annual-returns\/[^/]+|templates\/(clauses|assemblies)\/[^/]+)\/?$/;
+  /^\/(resolutions\/(?!companies\/)[^/]+|annual-returns\/[^/]+|templates\/(clauses|assemblies)\/[^/]+|companies\/imports\/[^/]+\/[^/]+)\/?$/;
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = useState<Workspace | null>(null);
   const [loading, setLoading] = useState(true);

@@ -15,6 +15,7 @@ import type {
 import type { ShareEntry } from '../domain/ar1/shares';
 import type { Charge } from '../domain/ar1/charges';
 import type { AnnualReturn } from '../domain/ar1/returns';
+import type { ImportBatch, ImportCompany } from '../domain/imports';
 import { sql } from 'drizzle-orm';
 import {
   sqliteTable,
@@ -375,5 +376,38 @@ export const annualReturns = sqliteTable(
   (t) => [
     uniqueIndex('annual_returns_company_date').on(t.companyId, t.returnDate),
     index('annual_returns_status').on(t.status),
+  ],
+);
+
+// ---------------------------------------------------------------- bulk import (0003)
+export const imports = sqliteTable(
+  'imports',
+  {
+    id: text('id').primaryKey(),
+    createdBy: text('created_by').notNull(),
+    status: text('status').notNull(),
+    revision: integer('revision').notNull(),
+    createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
+    data: text('data', { mode: 'json' }).$type<ImportBatch>().notNull(),
+  },
+  (t) => [index('imports_creator').on(t.createdBy, t.createdAt)],
+);
+export const importCompanies = sqliteTable(
+  'import_companies',
+  {
+    id: text('id').primaryKey(),
+    importId: text('import_id')
+      .notNull()
+      .references(() => imports.id),
+    status: text('status').notNull(),
+    /** The process reading this company and its last heartbeat; a stale claim is resumed. */
+    claimedBy: text('claimed_by'),
+    claimedAt: integer('claimed_at', { mode: 'timestamp_ms' }),
+    revision: integer('revision').notNull(),
+    data: text('data', { mode: 'json' }).$type<ImportCompany>().notNull(),
+  },
+  (t) => [
+    index('import_companies_import').on(t.importId),
+    index('import_companies_status').on(t.status, t.claimedAt),
   ],
 );

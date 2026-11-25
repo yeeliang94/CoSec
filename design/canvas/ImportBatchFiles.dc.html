@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Client files, batch 2 – CoSec Workspace</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 10px 0;border-bottom:1px solid #e0e3e6}
+td{padding:14px 10px 14px 0;border-bottom:1px solid #e7eaed;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.tab{padding:10px 0;color:#606972;font-size:14px;text-decoration:none}
+.sec{display:inline-flex;align-items:center;height:36px;padding:0 14px;box-sizing:border-box;border:1px solid #cbd1d6;border-radius:4px;color:#252b32;background:#ffffff;font:inherit}
+select{-webkit-appearance:none;appearance:none;padding-right:34px !important;background-image:url(/_blob/6de67599c7c5d719bba71e3ae53a6245) !important;background-repeat:no-repeat !important;background-position:right 12px center !important;background-size:12px 12px !important}
+</style>
+</helmet>
+<div style="display: flex; min-height: 900px; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="companies" hint-size="208px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; padding: 30px 32px 50px; box-sizing: border-box">
+<a href="Imports.dc.html" style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #606972"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Imports</a>
+<header style="display: flex; align-items: center; justify-content: space-between; margin-top: 4px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.45px; line-height: 1.3">Client files, batch 2</h1>
+<div style="display: flex; gap: 8px">
+<button type="button" class="sec">Pause reading</button>
+<a href="ImportReview.dc.html" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; box-sizing: border-box; border-radius: 4px; background: #284b5c; color: #ffffff; font-weight: 500; text-decoration: none">Review next company</a>
+</div>
+</header>
+<p style="margin: 12px 0 0">Reading 4 companies, 30 waiting.</p>
+<p style="margin: 8px 0 0; display: flex; align-items: center; gap: 8px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5f4c24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg>3 files look like they belong to another company.<a href="ImportSort.dc.html" style="font-size: 13px; font-weight: 500">Review files</a></p>
+<nav style="display: flex; gap: 28px; margin-top: 24px; border-bottom: 1px solid #e0e3e6">
+<a href="ImportBatch.dc.html" class="tab">Companies</a>
+<a href="ImportBatchFiles.dc.html" class="tab" style="color: #252b32; font-weight: 500; border-bottom: 2px solid #284b5c">Files</a>
+</nav>
+<div style="display: flex; gap: 8px; margin-top: 24px">
+<input type="search" aria-label="Search files" placeholder="Search file or company" style="width: 340px; height: 35px; box-sizing: border-box; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit">
+<select aria-label="Result" style="height: 35px; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit; background: #ffffff"><option>All files</option><option>Used</option><option>Not used</option><option>Looks like another company</option><option>Could not read</option></select>
+</div>
+<table style="width: 100%; border-collapse: collapse; margin-top: 24px; table-layout: fixed">
+<colgroup><col style="width: 27%"><col style="width: 23%"><col style="width: 23%"><col style="width: 7%"><col style="width: 20%"></colgroup>
+<thead><tr><th>File</th><th>Read as</th><th>Company folder</th><th class="num">Pages</th><th style="padding-right: 0">Result</th></tr></thead>
+<tbody>
+<tr><td><a href="ImportReview.dc.html">Meranti_Form9.pdf</a></td><td>Certificate of incorporation</td><td>Meranti Trading Sdn. Bhd.</td><td class="num">1</td><td style="padding-right: 0">Used for 3 values</td></tr>
+<tr><td><a href="ImportReview.dc.html">Scan_0042.pdf</a></td><td>Notice of change of directors</td><td>Meranti Trading Sdn. Bhd.</td><td class="num">2</td><td style="padding-right: 0">Used for 6 values</td></tr>
+<tr><td><a href="ImportReview.dc.html">Meranti members 2025.xlsx</a></td><td>Register of members</td><td>Meranti Trading Sdn. Bhd.</td><td class="num"></td><td style="padding-right: 0">Used for 12 values</td></tr>
+<tr><td><a href="ImportReview.dc.html">AR 2024 Meranti.pdf</a></td><td>Annual return 2024</td><td>Meranti Trading Sdn. Bhd.</td><td class="num">9</td><td style="padding-right: 0">Used for 14 values</td></tr>
+<tr><td><a href="ImportReview.dc.html">Constitution.pdf</a></td><td>Constitution</td><td>Kenanga Logistics Sdn. Bhd.</td><td class="num">24</td><td style="padding-right: 0">Used for 2 values</td></tr>
+<tr><td><a href="ImportReview.dc.html">Board minutes Mar 2024.docx</a></td><td>Directors' resolution</td><td>Kenanga Logistics Sdn. Bhd.</td><td class="num">3</td><td style="padding-right: 0">Used for 2 values</td></tr>
+<tr><td><a href="ImportReview.dc.html">Invoice 2231.pdf</a></td><td>Invoice</td><td>Bayu Services Sdn. Bhd.</td><td class="num">1</td><td style="padding-right: 0">Not used: not a company record</td></tr>
+<tr><td><a href="ImportSort.dc.html">IMG_7731.jpg</a></td><td>Letter of consent to act</td><td>Meranti Trading Sdn. Bhd.</td><td class="num">1</td><td style="padding-right: 0">Looks like Kenanga Logistics</td></tr>
+<tr><td><a href="ImportReview.dc.html">Charge_FB_2021.pdf</a></td><td>Certificate of registration of charge</td><td>Cempaka Holdings Berhad</td><td class="num">4</td><td style="padding-right: 0">Used for 5 values</td></tr>
+<tr><td><a href="ImportReview.dc.html">old_register.xls</a></td><td></td><td>Damar Engineering Sdn. Bhd.</td><td class="num"></td><td style="padding-right: 0; color: #a83230">Could not read: password protected</td></tr>
+</tbody>
+</table>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
