@@ -21,3 +21,7 @@ coverage/
 playwright-report/
 test-results/
 *.tsbuildinfo
+
+# Machine-only notes and documents, never committed
+*.local.md
+/internal/
