@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Resolutions – CoSec Workspace</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 10px 0;border-bottom:1px solid #e0e3e6}
+td{padding:16px 10px 16px 0;border-bottom:1px solid #e7eaed;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+select{-webkit-appearance:none;appearance:none;padding-right:34px !important;background-image:url(/_blob/6de67599c7c5d719bba71e3ae53a6245) !important;background-repeat:no-repeat !important;background-position:right 12px center !important;background-size:12px 12px !important}
+</style>
+</helmet>
+<div style="display: flex; min-height: 900px; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="resolutions" hint-size="208px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; padding: 30px 32px 50px; max-width: 1540px; box-sizing: border-box">
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.45px; line-height: 1.3">Resolutions</h1>
+<div style="display: flex; align-items: center; gap: 16px">
+<a href="Templates.dc.html" style="font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px">Templates<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></a>
+<a href="NewResolution.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; box-sizing: border-box; border-radius: 4px; background: #284b5c; color: #ffffff; font-size: 14px; font-weight: 500; text-decoration: none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New resolution</a>
+</div>
+</header>
+<div role="tablist" aria-label="Resolution status" style="display: flex; gap: 24px; margin-top: 18px; border-bottom: 1px solid #e0e3e6">
+<button type="button" role="tab" aria-selected="true" style="border: 0; background: transparent; font: inherit; padding: 8px 0 10px; color: #252b32; font-weight: 500; border-bottom: 2px solid #284b5c; margin-bottom: -1px; cursor: pointer">Open</button>
+<button type="button" role="tab" aria-selected="false" style="border: 0; background: transparent; font: inherit; padding: 8px 0 10px; color: #606972; cursor: pointer">Complete</button>
+<button type="button" role="tab" aria-selected="false" style="border: 0; background: transparent; font: inherit; padding: 8px 0 10px; color: #606972; cursor: pointer">Cancelled</button>
+<button type="button" role="tab" aria-selected="false" style="border: 0; background: transparent; font: inherit; padding: 8px 0 10px; color: #606972; cursor: pointer">All</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px">
+<label style="position: relative; display: block"><span style="position: absolute; left: -9999px">Search resolutions</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#606972" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="position: absolute; left: 12px; top: 10px"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" placeholder="Search resolutions" style="width: 280px; height: 35px; box-sizing: border-box; padding: 0 10px 0 35px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit; color: #252b32"></label>
+<select aria-label="Company" style="width: 218px; height: 35px; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit; color: #252b32; background: #ffffff"><option>All companies</option><option>Aster Advisory Sdn. Bhd.</option><option>Meranti Trading Sdn. Bhd.</option></select>
+<select aria-label="Kind" style="width: 186px; height: 35px; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit; color: #252b32; background: #ffffff"><option>All kinds</option><option>Board resolution</option><option>Director appointment</option><option>Director resignation</option></select>
+<select aria-label="Owner" style="width: 186px; height: 35px; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit; color: #252b32; background: #ffffff"><option>All owners</option><option>Aina Rahman</option><option>Daniel Tan</option><option>Mei Lim</option></select>
+</div>
+
+<h2 style="margin: 28px 0 8px; font-size: 15px; font-weight: 600">Waiting for you</h2>
+<table style="width: 100%; border-collapse: collapse; table-layout: fixed">
+<thead><tr><th style="width: 26%">Resolution</th><th style="width: 20%">Company</th><th style="width: 16%">Kind</th><th style="width: 14%">Status</th><th style="width: 13%">Owner</th><th style="width: 11%; padding-right: 0">Updated</th></tr></thead>
+<tbody>
+<tr><td><a href="ResolutionDetails.dc.html" style="font-weight: 600">Appointment of Siti Noor as director</a></td><td>Meranti Trading Sdn. Bhd.</td><td>Director appointment</td><td>In review</td><td>Aina Rahman</td><td style="padding-right: 0">16 Nov 2026</td></tr>
+<tr><td><a href="ResolutionDetails.dc.html" style="font-weight: 600">Change of registered office</a></td><td>Aster Advisory Sdn. Bhd.</td><td>Board resolution</td><td>Returned</td><td>Aina Rahman</td><td style="padding-right: 0">15 Nov 2026</td></tr>
+</tbody>
+</table>
+
+<h2 style="margin: 48px 0 8px; font-size: 15px; font-weight: 600">In progress</h2>
+<table style="width: 100%; border-collapse: collapse; table-layout: fixed">
+<thead><tr><th style="width: 26%">Resolution</th><th style="width: 20%">Company</th><th style="width: 16%">Kind</th><th style="width: 14%">Status</th><th style="width: 13%">Owner</th><th style="width: 11%; padding-right: 0">Updated</th></tr></thead>
+<tbody>
+<tr><td><a href="ResolutionDetails.dc.html" style="font-weight: 600">Directors' fees for 2026</a></td><td>Bayu Services Sdn. Bhd.</td><td>Board resolution</td><td>Draft</td><td>Aina Rahman</td><td style="padding-right: 0">16 Nov 2026</td></tr>
+<tr><td><a href="ResolutionDetails.dc.html" style="font-weight: 600">Opening of a bank account</a></td><td>Bayu Services Sdn. Bhd.</td><td>Board resolution</td><td>Draft</td><td>Daniel Tan</td><td style="padding-right: 0">15 Nov 2026</td></tr>
+<tr><td><a href="ResolutionDetails.dc.html" style="font-weight: 600">Resignation of Chong Wei</a></td><td>Linden Ventures Sdn. Bhd.</td><td>Director resignation</td><td>Draft</td><td>Mei Lim</td><td style="padding-right: 0">3 Nov 2026</td></tr>
+<tr><td><a href="ResolutionDetails.dc.html" style="font-weight: 600">Appointment of auditors</a></td><td>Cedar Field Sdn. Bhd.</td><td>Board resolution</td><td>Draft</td><td>Aina Rahman</td><td style="padding-right: 0">2 Nov 2026</td></tr>
+<tr><td><a href="ResolutionDetails.dc.html" style="font-weight: 600">Authority to sign documents</a></td><td>Ruang Studio Sdn. Bhd.</td><td>Board resolution</td><td>Draft</td><td>Daniel Tan</td><td style="padding-right: 0">31 Oct 2026</td></tr>
+</tbody>
+</table>
+
+<h2 style="margin: 48px 0 8px; font-size: 15px; font-weight: 600">Approved, ready to finish</h2>
+<table style="width: 100%; border-collapse: collapse; table-layout: fixed">
+<thead><tr><th style="width: 26%">Resolution</th><th style="width: 20%">Company</th><th style="width: 16%">Kind</th><th style="width: 14%">Status</th><th style="width: 13%">Owner</th><th style="width: 11%; padding-right: 0">Updated</th></tr></thead>
+<tbody>
+<tr><td><a href="ResolutionDetails.dc.html" style="font-weight: 600">Appointment of Nadia Aziz as director</a></td><td>Cedar Field Sdn. Bhd.</td><td>Director appointment</td><td>Approved</td><td>Mei Lim</td><td style="padding-right: 0">30 Oct 2026</td></tr>
+</tbody>
+</table>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

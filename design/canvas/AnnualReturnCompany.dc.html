@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A Company – Annual return 2026</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 8px 0;border-bottom:1px solid #e0e3e6}
+td{padding:12px 10px 12px 0;border-bottom:1px solid #e7eaed}
+.nav{display:inline-flex;align-items:center;height:36px;padding:0 14px;box-sizing:border-box;border:1px solid #cbd1d6;border-radius:4px;color:#252b32;text-decoration:none}
+</style>
+</helmet>
+<div style="display: flex; width: 1440px; height: 900px; overflow: hidden; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="annual" collapsed="{{yes}}" hint-size="56px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<dc-import name="AnnualReturnHeader" hint-size="100%,112px"></dc-import>
+<div style="flex: 1 1 0; min-height: 0; display: flex">
+<dc-import name="AnnualReturnSteps" step="a" hint-size="220px,788px"></dc-import>
+<section style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<div style="flex: 1 1 0; overflow: auto; padding: 24px 40px; display: flex; flex-direction: column; gap: 40px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 600">A Company</h2>
+<section style="margin-top: -16px">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px"><h3 style="margin: 0; font-size: 15px; font-weight: 600">Particulars as at 15 Oct 2026</h3><a href="CompanyEditDetails.dc.html" style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border: 1px solid #cbd1d6; border-radius: 4px; color: #252b32; font-size: 13px; text-decoration: none">Change in company record</a></div>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th style="width: 35%">Field</th><th style="padding-right: 0">Value</th></tr></thead>
+<tbody>
+<tr><td>Registered office</td><td style="padding-right: 0">13 Jalan Contoh, 50450 Kuala Lumpur</td></tr>
+<tr><td>Principal place of business</td><td style="padding-right: 0">13 Jalan Contoh, 50450 Kuala Lumpur</td></tr>
+<tr><td>Register of members kept at</td><td style="padding-right: 0">Registered office</td></tr>
+<tr><td>Financial records kept at</td><td style="padding-right: 0">Registered office</td></tr>
+<tr><td>Phone</td><td style="padding-right: 0">03-2100 0000</td></tr>
+<tr><td>Email</td><td style="padding-right: 0">admin@meranti.example</td></tr>
+<tr><td>Nature of business</td><td style="padding-right: 0">Wholesale of timber products</td></tr>
+</tbody>
+</table>
+</section>
+<section>
+<h3 style="margin: 0 0 8px; font-size: 15px; font-weight: 600">MSIC codes</h3>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th style="width: 20%">Code</th><th style="padding-right: 0">Description</th></tr></thead>
+<tbody><tr><td>46632</td><td style="padding-right: 0">Wholesale of timber products</td></tr></tbody>
+</table>
+</section>
+<section>
+<h3 style="margin: 0 0 8px; font-size: 15px; font-weight: 600">Branches</h3>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th>Address</th><th style="padding-right: 0">Opened</th></tr></thead>
+<tbody><tr><td>22 Jalan Pantai, Johor Bahru</td><td style="padding-right: 0">3 Mar 2023</td></tr></tbody>
+</table>
+</section>
+</div>
+<footer style="display: flex; justify-content: space-between; padding: 14px 40px; border-top: 1px solid #e0e3e6">
+<a href="AnnualReturnFiling.dc.html" class="nav">Back</a>
+<a href="AnnualReturnShareCapital.dc.html" class="nav">Continue</a>
+</footer>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

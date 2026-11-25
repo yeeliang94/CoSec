@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Annual return step list</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.st a{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:3px;color:#252b32;text-decoration:none;font-size:13px}
+.st a:hover{background:#f0f4f6}
+</style>
+</helmet>
+<nav class="st" aria-label="Return sections" style="width: 220px; height: 100%; min-height: 700px; box-sizing: border-box; padding: 20px 14px; border-right: 1px solid #e0e3e6; background: #ffffff; display: flex; flex-direction: column; gap: 2px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.45">
+<a href="AnnualReturnFiling.dc.html" style="{{s.filing}}">Filing information</a>
+<a href="AnnualReturnCompany.dc.html" style="{{s.a}}">A Company</a>
+<a href="AnnualReturnShareCapital.dc.html" style="{{s.b}}">B Share capital</a>
+<a href="AnnualReturnCharges.dc.html" style="{{s.c}}">C Charges</a>
+<a href="AnnualReturnOfficers.dc.html" style="{{s.d}}">D Officers<sc-if value="{{warn}}" hint-placeholder-val="{{ true }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="{{ic.d}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Something missing"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg></sc-if></a>
+<a href="AnnualReturnMembers.dc.html" style="{{s.e}}">E Members<sc-if value="{{warn}}" hint-placeholder-val="{{ true }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="{{ic.e}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Something missing"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg></sc-if></a>
+<a href="AnnualReturnAnalysis.dc.html" style="{{s.f}}">F Shareholding analysis</a>
+<a href="AnnualReturnCertificate.dc.html" style="{{s.g}}">G Certificate</a>
+<a href="AnnualReturnCheck.dc.html" style="{{s.check}}">Check and download</a>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"step":{"editor":"enum","options":["filing","a","b","c","d","e","f","g","check"],"default":"d"},"warnings":{"editor":"boolean","default":true},"$preview":{"width":220,"height":700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const cur = this.props.step ?? 'd';
+    const keys = ['filing', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'check'];
+    const s = {};
+    keys.forEach((k) => { s[k] = k === cur ? 'background: #284b5c; color: #ffffff;' : 'color: #252b32;'; });
+    const ic = { d: cur === 'd' ? '#ffffff' : '#5f4c24', e: cur === 'e' ? '#ffffff' : '#5f4c24' };
+    return { s, ic, warn: this.props.warnings ?? true };
+  }
+}
+</script>
+</body>
+</html>

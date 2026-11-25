@@ -1,0 +1,300 @@
+import { sql, type SQL } from 'drizzle-orm';
+import { db, transaction } from '../db';
+import { auditChange } from '../resolution/shared';
+import { assertCapability, assertCompany, DomainError } from '../../domain/access';
+import type { Actor } from '../../domain/model';
+import { csvCell, isCalendarDate, type AuditEntryView } from '../../domain/resolution/records';
+
+export type AuditFilters = {
+  companyId?: string;
+  entityType?: string;
+  entityId?: string;
+  action?: string;
+  actorId?: string;
+  /** Inclusive calendar dates in Asia/Kuala_Lumpur. */
+  from?: string;
+  to?: string;
+};
+export const AUDIT_PAGE_MAX = 100;
+export const AUDIT_EXPORT_MAX = 5000;
+
+/** Start of a Kuala Lumpur calendar day (UTC+8, no daylight saving) in epoch milliseconds. */
+function klDayStart(date: string, addDays = 0) {
+  const at = new Date(`${date}T00:00:00+08:00`);
+  at.setUTCDate(at.getUTCDate() + addDays);
+  return at.getTime();
+}
+const list = (values: string[]) =>
+  sql.join(
+    values.map((v) => sql`${v}`),
+    sql`, `,
+  );
+
+/** Firm-level (no company, no scope) entity types that template administrators may read. */
+const TEMPLATE_ENTITIES = [
+  'template',
+  'template_version',
+  'clause',
+  'clause_template',
+  'clause_version',
+  'assembly',
+  'assembly_version',
+  'output_type',
+  'record_field',
+];
+const PERSON_CREATOR = sql`(SELECT json_extract(p.data, '$.createdBy') FROM people p
+  WHERE p.id = a.subject_id)`;
+
+/**
+ * Firm-level rows by entity: templates and record fields for template administrators; people for
+ * the person's creator or people managers (others' email and notes are redacted in the view);
+ * an actor's own preferences and exports for that actor; users, settings and anything else for
+ * user administrators.
+ */
+function firmLevel(actor: Actor): SQL {
+  const has = (c: Actor['capabilities'][number]) => actor.capabilities.includes(c);
+  const kinds: SQL[] = [];
+  if (has('manage_templates')) kinds.push(sql`a.entity_type IN (${list(TEMPLATE_ENTITIES)})`);
+  kinds.push(
+    has('manage_people')
+      ? sql`a.entity_type = 'person'`
+      : sql`(a.entity_type = 'person' AND ${PERSON_CREATOR} = ${actor.id})`,
+  );
+  if (has('manage_users'))
+    kinds.push(
+      sql`(a.entity_type IS NULL OR a.entity_type NOT IN (${list(['person', ...TEMPLATE_ENTITIES])}))`,
+    );
+  else
+    kinds.push(
+      sql`(a.actor_id = ${actor.id} AND (a.action LIKE 'preferences.%' OR a.entity_type = 'audit'))`,
+    );
+  return sql`(a.company_id IS NULL AND (a.scope_company_ids IS NULL OR json_array_length(a.scope_company_ids) = 0)
+    AND (${sql.join(kinds, sql` OR `)}))`;
+}
+
+/**
+ * Rows the actor may read: their companies' rows, rows whose fixed scope overlaps their
+ * companies, and firm-level rows by entity type (see `firmLevel`). Rows from the retired
+ * beneficial-ownership feature (BO rows, W06 jobs, BO documents) stay hidden from everyone.
+ */
+function visibility(actor: Actor): SQL {
+  const scopes: SQL[] = [];
+  if (actor.companyIds.length) {
+    scopes.push(sql`a.company_id IN (${list(actor.companyIds)})`);
+    scopes.push(
+      sql`EXISTS (SELECT 1 FROM json_each(a.scope_company_ids) WHERE value IN (${list(actor.companyIds)}))`,
+    );
+  }
+  scopes.push(firmLevel(actor));
+  const scope = scopes.length ? sql`(${sql.join(scopes, sql` OR `)})` : sql`FALSE`;
+  return sql`${scope} AND a.sensitivity <> 'BO' AND a.action NOT LIKE 'bo.%'
+    AND NOT EXISTS (SELECT 1 FROM jobs j WHERE j.id = a.subject_id
+      AND json_extract(j.data, '$.activity') = 'W06')
+    AND NOT EXISTS (SELECT 1 FROM documents d WHERE d.id = a.subject_id
+      AND json_extract(d.data, '$.classification') = 'BO')`;
+}
+
+function where(actor: Actor, f: AuditFilters): SQL {
+  const parts: SQL[] = [visibility(actor)];
+  if (f.companyId) {
+    assertCompany(actor, f.companyId);
+    parts.push(
+      sql`(a.company_id = ${f.companyId} OR EXISTS (SELECT 1 FROM json_each(a.scope_company_ids) WHERE value = ${f.companyId}))`,
+    );
+  }
+  if (f.entityType) parts.push(sql`a.entity_type = ${f.entityType}`);
+  if (f.entityId) parts.push(sql`a.subject_id = ${f.entityId}`);
+  if (f.action) parts.push(sql`a.action = ${f.action}`);
+  if (f.actorId) parts.push(sql`a.actor_id = ${f.actorId}`);
+  for (const date of [f.from, f.to])
+    if (date !== undefined && !isCalendarDate(date)) throw new DomainError('Choose valid dates.');
+  if (f.from) parts.push(sql`a.created_at >= ${klDayStart(f.from)}`);
+  if (f.to) parts.push(sql`a.created_at < ${klDayStart(f.to, 1)}`);
+  return sql.join(parts, sql` AND `);
+}
+
+type Row = {
+  id: string;
+  /** created_at in epoch milliseconds. */
+  ms: number;
+  actorId: string;
+  actorName: string | null;
+  companyId: string | null;
+  companyName: string | null;
+  action: string;
+  entityType: string | null;
+  subjectId: string;
+  reason: string | null;
+  requestId: string | null;
+  detail: unknown;
+  scopeCompanyIds: unknown;
+  personCreatedBy: string | null;
+};
+const REDACTED = '[redacted]';
+const PRIVATE_PERSON_FIELDS = ['email', 'notes'];
+/** Hides a person's email and notes, whether diffed as leaves or inside a whole-record value. */
+function redactPerson(change: AuditEntryView['changes'][number]) {
+  const top = change.path.split('.')[0];
+  if (PRIVATE_PERSON_FIELDS.includes(top))
+    return { path: change.path, before: REDACTED, after: REDACTED };
+  const hide = (v: unknown) =>
+    v && typeof v === 'object' && !Array.isArray(v)
+      ? Object.fromEntries(
+          Object.entries(v).map(([k, x]) => [k, PRIVATE_PERSON_FIELDS.includes(k) ? REDACTED : x]),
+        )
+      : v;
+  return { path: change.path, before: hide(change.before), after: hide(change.after) };
+}
+function toView(actor: Actor, r: Row): AuditEntryView {
+  const detail = (typeof r.detail === 'string' ? JSON.parse(r.detail) : r.detail) as Record<
+    string,
+    unknown
+  > | null;
+  const { changes, ...rest } = (detail ?? {}) as { changes?: AuditEntryView['changes'] };
+  const visibleCompany = r.companyId && actor.companyIds.includes(r.companyId);
+  const scope = (
+    typeof r.scopeCompanyIds === 'string' ? JSON.parse(r.scopeCompanyIds) : r.scopeCompanyIds
+  ) as string[] | null;
+  // A firm-level person row (an unlinked person) shows contact details only to its creator.
+  const redact =
+    r.entityType === 'person' && !r.companyId && !scope?.length && r.personCreatedBy !== actor.id;
+  const shown = Array.isArray(changes) ? changes : [];
+  return {
+    id: r.id,
+    at: new Date(r.ms).toISOString(),
+    actorId: r.actorId,
+    actorName: r.actorName ?? (r.actorId === 'system' ? 'System' : 'Unknown user'),
+    companyId: visibleCompany ? r.companyId : null,
+    companyName: visibleCompany ? r.companyName : null,
+    action: r.action,
+    entityType: r.entityType,
+    entityId: r.subjectId,
+    reason: r.reason,
+    requestId: r.requestId,
+    changes: redact ? shown.map(redactPerson) : shown,
+    summary: Object.keys(rest).length ? JSON.stringify(rest).slice(0, 500) : null,
+  };
+}
+
+function encodeCursor(row: Row) {
+  return Buffer.from(JSON.stringify([row.ms, row.id])).toString('base64url');
+}
+function decodeCursor(cursor: string): [number, string] {
+  try {
+    const value = JSON.parse(Buffer.from(cursor, 'base64url').toString('utf8'));
+    if (
+      Array.isArray(value) &&
+      value.length === 2 &&
+      Number.isSafeInteger(value[0]) &&
+      typeof value[1] === 'string'
+    )
+      return value as [number, string];
+  } catch {}
+  throw new DomainError('This page link is no longer valid. Start from the first page.');
+}
+
+async function select(actor: Actor, filters: AuditFilters, limit: number, cursor?: string) {
+  const conditions = [where(actor, filters)];
+  if (cursor) {
+    const [ms, id] = decodeCursor(cursor);
+    conditions.push(sql`(a.created_at < ${ms} OR (a.created_at = ${ms} AND a.id < ${id}))`);
+  }
+  return db.all<Row>(sql`
+    SELECT a.id, a.created_at AS ms, a.actor_id AS actorId,
+      u.name AS actorName, a.company_id AS companyId,
+      json_extract(c.data, '$.name') AS companyName, a.action,
+      a.entity_type AS entityType, a.subject_id AS subjectId, a.reason, a.request_id AS requestId,
+      a.detail, a.scope_company_ids AS scopeCompanyIds,
+      CASE WHEN a.entity_type = 'person' THEN ${PERSON_CREATOR} END AS personCreatedBy
+    FROM audit_events a
+    LEFT JOIN "user" u ON u.id = a.actor_id
+    LEFT JOIN companies c ON c.id = a.company_id
+    WHERE ${sql.join(conditions, sql` AND `)}
+    ORDER BY a.created_at DESC, a.id DESC
+    LIMIT ${limit}`);
+}
+
+async function countAudit(actor: Actor, filters: AuditFilters) {
+  const row = db.get<{ total: number }>(
+    sql`SELECT COUNT(*) AS total FROM audit_events a WHERE ${where(actor, filters)}`,
+  );
+  return row.total;
+}
+
+export async function queryAudit(
+  actor: Actor,
+  filters: AuditFilters,
+  page: { cursor?: string; limit?: number } = {},
+) {
+  assertCapability(actor, 'view_audit');
+  const limit = Math.min(Math.max(page.limit ?? 50, 1), AUDIT_PAGE_MAX);
+  const rows = await select(actor, filters, limit + 1, page.cursor);
+  const pageRows = rows.slice(0, limit);
+  return {
+    entries: pageRows.map((r) => toView(actor, r)),
+    nextCursor: rows.length > limit ? encodeCursor(pageRows[pageRows.length - 1]) : null,
+    // Counted once per search; later pages keep the first page's total.
+    total: page.cursor ? undefined : await countAudit(actor, filters),
+  };
+}
+
+const klTime = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Kuala_Lumpur',
+  dateStyle: 'medium',
+  timeStyle: 'medium',
+});
+/**
+ * CSV of the visible, filtered entries (newest first), itself recorded in the audit. More than
+ * AUDIT_EXPORT_MAX matches is refused rather than silently cut, so a file is always complete.
+ */
+export async function exportAudit(actor: Actor, filters: AuditFilters) {
+  assertCapability(actor, 'view_audit');
+  assertCapability(actor, 'export_audit');
+  const rows = await select(actor, filters, AUDIT_EXPORT_MAX + 1);
+  if (rows.length > AUDIT_EXPORT_MAX)
+    throw new DomainError(
+      `More than ${AUDIT_EXPORT_MAX.toLocaleString('en-MY')} entries match. Narrow the filters, for example by date or company, and export again.`,
+      'TOO_LARGE',
+    );
+  const entries = rows.map((r) => toView(actor, r));
+  const header = [
+    'Time (UTC)',
+    'Time (Kuala Lumpur)',
+    'Actor',
+    'Company',
+    'Action',
+    'Entity type',
+    'Entity id',
+    'Reason',
+    'Request id',
+    'Changes',
+    'Summary',
+  ];
+  const lines = [
+    header,
+    ...entries.map((e) => [
+      e.at,
+      klTime.format(new Date(e.at)),
+      e.actorName,
+      e.companyName ?? '',
+      e.action,
+      e.entityType ?? '',
+      e.entityId,
+      e.reason ?? '',
+      e.requestId ?? '',
+      e.changes.length ? JSON.stringify(e.changes) : '',
+      e.summary ?? '',
+    ]),
+  ].map((cells) => cells.map(csvCell).join(','));
+  await transaction((tx) =>
+    auditChange(tx, actor, {
+      companyId: filters.companyId ?? null,
+      scopeCompanyIds: filters.companyId ? [filters.companyId] : [],
+      entityType: 'audit',
+      entityId: 'export',
+      action: 'audit.exported',
+      detail: { filters, rowCount: entries.length },
+    }),
+  );
+  return { csv: lines.join('\r\n') + '\r\n', rowCount: entries.length };
+}

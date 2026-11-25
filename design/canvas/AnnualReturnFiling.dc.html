@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Filing information – Annual return 2026</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 8px 0;border-bottom:1px solid #e0e3e6}
+td{padding:12px 10px 12px 0;border-bottom:1px solid #e7eaed}
+select{width:100%;max-width:320px;height:40px;box-sizing:border-box;padding:0 10px;border:1px solid #b9c2c9;border-radius:4px;font:inherit;color:#252b32;background:#ffffff}
+.nav{display:inline-flex;align-items:center;height:36px;padding:0 14px;box-sizing:border-box;border:1px solid #cbd1d6;border-radius:4px;color:#252b32;text-decoration:none}
+select{-webkit-appearance:none;appearance:none;padding-right:34px !important;background-image:url(/_blob/6de67599c7c5d719bba71e3ae53a6245) !important;background-repeat:no-repeat !important;background-position:right 12px center !important;background-size:12px 12px !important}
+</style>
+</helmet>
+<div style="display: flex; width: 1440px; height: 900px; overflow: hidden; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="annual" collapsed="{{yes}}" hint-size="56px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<dc-import name="AnnualReturnHeader" hint-size="100%,112px"></dc-import>
+<div style="flex: 1 1 0; min-height: 0; display: flex">
+<dc-import name="AnnualReturnSteps" step="filing" hint-size="220px,788px"></dc-import>
+<section style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<div style="flex: 1 1 0; overflow: auto; padding: 24px 40px; display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 600">Filing information</h2>
+<table style="width: 100%; max-width: 760px; border-collapse: collapse">
+<thead><tr><th style="width: 45%">Field</th><th style="padding-right: 0">Value</th></tr></thead>
+<tbody>
+<tr><td>Company</td><td style="padding-right: 0">Meranti Trading Sdn. Bhd. (202000000002)</td></tr>
+<tr><td>Status of company</td><td style="padding-right: 0">Private company</td></tr>
+<tr><td>Date of annual return</td><td style="padding-right: 0">15 Oct 2026</td></tr>
+<tr><td>Application of submission</td><td style="padding-right: 0"><select aria-label="Application of submission"><option>Annual return</option><option>Rectification</option></select></td></tr>
+<tr><td>Statutory declaration for rectification</td><td style="padding-right: 0"><select aria-label="Statutory declaration for rectification"><option>No</option><option>Yes</option></select></td></tr>
+<tr><td>Court order reference</td><td style="padding-right: 0"><input aria-label="Court order reference" style="width: 100%; max-width: 320px; height: 40px; box-sizing: border-box; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit"></td></tr>
+<tr><td>Shares quoted on a stock exchange</td><td style="padding-right: 0">No</td></tr>
+</tbody>
+</table>
+<button type="button" style="align-self: flex-start; height: 36px; padding: 0 14px; border: 1px solid #cbd1d6; border-radius: 4px; background: #ffffff; font: inherit">Save</button>
+</div>
+<footer style="display: flex; justify-content: flex-end; padding: 14px 40px; border-top: 1px solid #e0e3e6">
+<a href="AnnualReturnCompany.dc.html" class="nav">Continue</a>
+</footer>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

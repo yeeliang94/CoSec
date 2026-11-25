@@ -1,0 +1,23 @@
+# Local OS and Python files
+.DS_Store
+__pycache__/
+*.py[cod]
+
+# Local credentials
+.env
+.env.*
+!.env.example
+
+# Impeccable runtime state
+.impeccable/*
+!.impeccable/design.json
+
+# Application dependencies, local data and generated verification artifacts
+node_modules/
+.next/
+.local/
+private-storage/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo

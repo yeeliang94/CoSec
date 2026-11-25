@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Charges – Meranti Trading Sdn. Bhd.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 10px 0;border-bottom:1px solid #e0e3e6}
+td{padding:16px 10px 16px 0;border-bottom:1px solid #e7eaed;white-space:nowrap;font-variant-numeric:tabular-nums}
+.num{text-align:right}
+</style>
+</helmet>
+<div style="display: flex; min-height: 900px; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="companies" hint-size="208px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; padding: 30px 32px 50px; box-sizing: border-box">
+<dc-import name="CompanyHeader" tab="charges" hint-size="100%,190px"></dc-import>
+<div style="display: flex; gap: 48px; margin-top: 28px">
+<section style="flex: 1 1 0; min-width: 0">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px"><h2 style="margin: 0; font-size: 17px; font-weight: 600">Charges</h2><a href="CompanyChargeRecord.dc.html" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; box-sizing: border-box; border: 1px solid #cbd1d6; border-radius: 4px; background: #ffffff; color: #252b32; text-decoration: none">Record charge</a></div>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th>Registered no.</th><th>Registered</th><th>Nature</th><th>Chargee</th><th class="num">Amount (MYR)</th><th>Status</th><th style="padding-right: 0"></th></tr></thead>
+<tbody>
+<tr><td>202301004512</td><td>8 Feb 2023</td><td>Fixed charge</td><td>Bank Fiktif Berhad</td><td class="num">1,500,000.00</td><td>Outstanding</td><td style="padding-right: 0; text-align: right"><a href="CompanyChargeMenu.dc.html" aria-label="More actions for 202301004512" style="color: #606972; text-decoration: none">⋯</a></td></tr>
+<tr><td>202101002203</td><td>2 Jun 2021</td><td>Debenture</td><td>Bank Contoh Berhad</td><td class="num">400,000.00</td><td>Discharged 30 Jun 2025</td><td style="padding-right: 0; text-align: right"><button type="button" aria-label="More actions" style="border: 0; background: transparent; color: #606972">⋯</button></td></tr>
+</tbody>
+</table>
+</section>
+<dc-import name="CompanyDetails" hint-size="320px,420px"></dc-import>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

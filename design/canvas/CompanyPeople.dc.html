@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>People – Meranti Trading Sdn. Bhd.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 10px 0;border-bottom:1px solid #e0e3e6}
+td{padding:16px 10px 16px 0;border-bottom:1px solid #e7eaed;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sm{height:30px;padding:0 10px;border:1px solid #cbd1d6;border-radius:4px;background:#ffffff;font:inherit;font-size:13px}
+</style>
+</helmet>
+<div style="display: flex; min-height: 900px; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="companies" hint-size="208px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; padding: 30px 32px 50px; box-sizing: border-box">
+<dc-import name="CompanyHeader" tab="people" hint-size="100%,190px"></dc-import>
+<div style="display: flex; gap: 48px; margin-top: 28px">
+<section style="flex: 1 1 0; min-width: 0">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 16px">
+<div><label for="ra" style="display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px">Record as at</label><input id="ra" value="17 Nov 2026" style="width: 160px; height: 35px; box-sizing: border-box; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit"></div>
+<a href="CompanyAddPerson.dc.html" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; box-sizing: border-box; border: 1px solid #cbd1d6; border-radius: 4px; color: #252b32; text-decoration: none">Add person</a>
+</div>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th>Person</th><th>Role</th><th>From</th><th>Until</th><th style="padding-right: 0"></th></tr></thead>
+<tbody>
+<tr><td><a href="People.dc.html" style="font-weight: 600">Siti Noor binti Ahmad</a></td><td>Director</td><td>15 Oct 2020</td><td></td><td style="padding-right: 0; text-align: right"><button type="button" class="sm">End</button></td></tr>
+<tr><td><a href="People.dc.html" style="font-weight: 600">Lim Wei Jie</a></td><td>Director</td><td>15 Oct 2020</td><td></td><td style="padding-right: 0; text-align: right"><a href="CompanyEndRelationship.dc.html" class="sm" aria-label="End Director relationship for Lim Wei Jie" style="display: inline-flex; align-items: center; box-sizing: border-box; color: #252b32; text-decoration: none">End</a></td></tr>
+<tr><td><a href="People.dc.html" style="font-weight: 600">Tan Mei Ling</a></td><td>Secretary</td><td>15 Oct 2020</td><td></td><td style="padding-right: 0; text-align: right"><button type="button" class="sm">End</button></td></tr>
+<tr><td><a href="People.dc.html" style="font-weight: 600">Meranti Holdings Sdn. Bhd.</a></td><td>Member (shareholder)</td><td>15 Oct 2020</td><td></td><td style="padding-right: 0; text-align: right"><button type="button" class="sm">End</button></td></tr>
+</tbody>
+</table>
+<button type="button" style="margin-top: 20px; border: 0; background: transparent; padding: 0; font: inherit; font-size: 13px; font-weight: 500; color: #284b5c; display: inline-flex; align-items: center; gap: 4px">Former and future<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+</section>
+<dc-import name="CompanyDetails" hint-size="320px,420px"></dc-import>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

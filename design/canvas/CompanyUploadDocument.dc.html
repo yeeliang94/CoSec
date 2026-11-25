@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Upload document</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+input[type=text],select{width:100%;height:40px;box-sizing:border-box;padding:0 10px;border:1px solid #b9c2c9;border-radius:4px;font:inherit;color:#252b32;background:#ffffff}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 900px; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45; color: #252b32">
+<dc-import name="CompanyDocuments" hint-size="1440px,900px"></dc-import>
+<div style="position: absolute; inset: 0; background: rgba(28, 45, 57, 0.32)"></div>
+<div role="dialog" aria-labelledby="ud-t" style="position: absolute; top: 0; right: 0; width: 650px; height: 900px; background: #ffffff; box-shadow: -12px 0 38px rgba(0, 0, 0, 0.12); display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 22px 32px; border-bottom: 1px solid #e0e3e6">
+<h2 id="ud-t" style="margin: 0; font-size: 17px; font-weight: 600">Upload document</h2>
+<a href="CompanyDocuments.dc.html" aria-label="Close" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: #606972"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></a>
+</div>
+<div style="flex: 1 1 auto; overflow: auto; padding: 28px 32px; display: flex; flex-direction: column; gap: 24px; max-width: 640px">
+<div><label for="ud-t">Evidence title</label><input type="text" id="ud-t"></div>
+<div><label for="ud-f">File</label><input type="file" id="ud-f" accept=".pdf,.png,.jpg,.jpeg,.txt" style="font: inherit"></div>
+</div>
+<div style="display: flex; justify-content: flex-end; gap: 8px; padding: 16px 32px; border-top: 1px solid #e0e3e6">
+<button type="button" style="height: 36px; padding: 0 14px; border: 1px solid #cbd1d6; border-radius: 4px; background: #ffffff; color: #252b32; font: inherit">Upload evidence</button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+/* Annual return (MBRS AR1) screens and the records they read: company particulars, shares,
+   charges. Loaded last. Tokens only; see DESIGN.md "Refresh rules (30 October 2026)". */
+
+/* Details panel heading with its Edit section link */
+.aside-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.facts .fact-line {
+  display: block;
+}
+
+/* A quiet note under a field, such as an MSIC code's description */
+.field-note {
+  display: block;
+  margin-top: var(--space-xs);
+  color: var(--muted);
+  font-size: var(--text-meta);
+}
+
+/* A required value mTool will reject when empty: the control's outline only, no fill */
+input.missing,
+select.missing,
+textarea.missing {
+  border-color: var(--danger);
+}
+
+.people-kind-tabs {
+  margin-bottom: var(--space-section);
+}
+
+/* Number columns read right-aligned so digits line up */
+.records-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.share-register-table .col-action {
+  width: 48px;
+}
+.form-stack.dependent {
+  padding-left: var(--space-section);
+}
+
+/* Annual returns list and the return workspace */
+.results-line {
+  margin: 0 0 0 auto;
+  color: var(--muted);
+  font-size: var(--text-meta);
+}
+.danger-text {
+  color: var(--danger);
+}
+.ok-line {
+  margin: var(--space-md) 0 0;
+  color: var(--success);
+}
+.records-table .total-row td {
+  font-weight: 600;
+}
+.plain-steps {
+  margin: var(--space-sm) 0 var(--space-lg);
+  padding-left: var(--space-xl);
+}
+.plain-steps li + li {
+  margin-top: var(--space-xs);
+}
+.return-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 48px;
+  margin-top: var(--space-section);
+}
+.return-steps ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: sticky;
+  top: var(--space-section);
+}
+.return-steps button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: 36px;
+  padding: 0 var(--space-md);
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+}
+.return-steps button:hover {
+  background: var(--row-hover);
+}
+.return-steps button.active {
+  background: var(--selection);
+  font-weight: 600;
+}
+.return-body {
+  min-width: 0;
+  max-width: 1040px;
+}
+.return-body > h2 {
+  margin: 0 0 var(--space-lg);
+  font-size: var(--text-section);
+}
+.return-body h3 {
+  margin: var(--space-section) 0 var(--space-md);
+  font-size: var(--text-body);
+}
+.return-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+}
+.return-issues {
+  list-style: none;
+  margin: 0 0 var(--space-section);
+  padding: 0;
+}
+.return-issues > .warning-line {
+  margin: 0;
+  padding: var(--space-xs) 0;
+}
+.return-form {
+  margin-top: var(--space-section);
+}
+.return-facts dd {
+  white-space: normal;
+}
+.answers-table input {
+  width: 100%;
+  min-width: 0;
+}
+.fixed-answer {
+  display: grid;
+  gap: var(--space-xs);
+}
+/* The question reads like a field label; the answer below it stays body text. */
+.fixed-answer > span:first-child {
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+.upload-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+.filing-table td:first-child {
+  width: 40%;
+}

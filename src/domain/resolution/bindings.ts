@@ -1,0 +1,182 @@
+import { nextYearEnd } from '../company';
+import type { FieldDefinition, PersonSnapshot, RecordProperty, ResolutionContext } from './model';
+import { DATE_PROPERTIES, RECORD_PROPERTIES } from './model';
+
+export type BindingType = 'text' | 'date' | 'any';
+export type BindingInfo = { path: string; valueType: BindingType; description: string };
+
+/** The complete allowlist. Anything not listed (or matching a pattern below) is rejected. */
+export const BINDINGS: readonly BindingInfo[] = [
+  { path: 'company.name', valueType: 'text', description: 'Company name' },
+  { path: 'company.registrationNumber', valueType: 'text', description: 'Registration number' },
+  { path: 'company.address', valueType: 'text', description: 'Registered address' },
+  { path: 'company.incorporationDate', valueType: 'date', description: 'Incorporation date' },
+  { path: 'company.financialYearEnd', valueType: 'date', description: 'Financial year end' },
+  {
+    path: 'company.citation.directorAuthority',
+    valueType: 'text',
+    description: "Constitution citation: directors' authority",
+  },
+  {
+    path: 'company.citation.memberAuthority',
+    valueType: 'text',
+    description: "Constitution citation: members' authority",
+  },
+  {
+    path: 'company.citation.electionAuthority',
+    valueType: 'text',
+    description: 'Constitution citation: election authority',
+  },
+  { path: 'case.title', valueType: 'text', description: 'Case title' },
+  { path: 'case.instructionDate', valueType: 'date', description: 'Case instruction date' },
+  { path: 'case.resolutionDate', valueType: 'date', description: 'Case resolution date' },
+  { path: 'case.effectiveDate', valueType: 'date', description: 'Case effective date' },
+  { path: 'firm.name', valueType: 'text', description: 'Firm name' },
+  { path: 'firm.registrationNumber', valueType: 'text', description: 'Firm registration number' },
+  { path: 'firm.address', valueType: 'text', description: 'Firm address' },
+  { path: 'firm.phone', valueType: 'text', description: 'Firm phone' },
+  { path: 'firm.email', valueType: 'text', description: 'Firm email' },
+  { path: 'today', valueType: 'date', description: 'Date of preparation' },
+];
+const CUSTOM = /^(company|case)\.custom\.([a-zA-Z0-9_-]{1,64})$/;
+const SELECTION = new RegExp(
+  String.raw`^selection\.([a-z][a-z0-9_]{1,63})\.(${RECORD_PROPERTIES.join('|')})$`,
+);
+
+/** A person's property as stored (dates as YYYY-MM-DD); '' when not recorded. */
+export function rawPersonProperty(person: PersonSnapshot, property: RecordProperty): string {
+  switch (property) {
+    case 'name':
+    case 'capacity':
+    case 'appointedOn':
+    case 'ceasedOn':
+      return person[property] ?? '';
+    case 'otherDirectorships':
+      return person.otherDirectorships ?? '';
+    default:
+      return person.particulars?.[property] ?? '';
+  }
+}
+
+/** Registry entry for a path, or null when the path is not allowed. */
+export function bindingInfo(path: string): (BindingInfo & { selection?: string }) | null {
+  const fixed = BINDINGS.find((b) => b.path === path);
+  if (fixed) return fixed;
+  const custom = CUSTOM.exec(path);
+  if (custom)
+    return {
+      path,
+      valueType: 'any',
+      description: `${custom[1] === 'company' ? 'Company' : 'Case'} custom field`,
+    };
+  const selection = SELECTION.exec(path);
+  if (selection)
+    return {
+      path,
+      valueType: DATE_PROPERTIES.includes(selection[2] as RecordProperty) ? 'date' : 'text',
+      description: `Selected person: ${selection[2]}`,
+      selection: selection[1],
+    };
+  return null;
+}
+
+export type BoundValue = string | boolean | null;
+
+/**
+ * Resolves an allowlisted path against the authorised context. `selected` resolves a
+ * recordReference question (for `selection.<fieldId>.<property>`).
+ */
+export function resolveBinding(
+  path: string,
+  ctx: ResolutionContext,
+  selected: (fieldId: string) => PersonSnapshot | null,
+): BoundValue {
+  const info = bindingInfo(path);
+  if (!info) throw new Error(`Binding ${path} is not allowed.`);
+  const custom = CUSTOM.exec(path);
+  if (custom) {
+    const bag = custom[1] === 'company' ? ctx.company.custom : ctx.case.custom;
+    return Object.hasOwn(bag, custom[2]) ? (bag[custom[2]] ?? null) : null;
+  }
+  const selection = SELECTION.exec(path);
+  if (selection) {
+    const person = selected(selection[1]);
+    return person ? rawPersonProperty(person, selection[2] as RecordProperty) || null : null;
+  }
+  switch (path) {
+    case 'company.name':
+      return ctx.company.name;
+    case 'company.registrationNumber':
+      return ctx.company.registrationNumber;
+    case 'company.address':
+      return ctx.company.address;
+    case 'company.incorporationDate':
+      return ctx.company.incorporationDate;
+    case 'company.financialYearEnd':
+      // The year end that closes the financial year in progress on the record date.
+      return ctx.company.financialYearEnd
+        ? nextYearEnd(ctx.company.financialYearEnd, ctx.asAt)
+        : null;
+    case 'company.citation.directorAuthority':
+      return ctx.company.citations.directorAuthority ?? null;
+    case 'company.citation.memberAuthority':
+      return ctx.company.citations.memberAuthority ?? null;
+    case 'company.citation.electionAuthority':
+      return ctx.company.citations.electionAuthority ?? null;
+    case 'case.title':
+      return ctx.case.title;
+    case 'case.instructionDate':
+      return ctx.case.instructionDate;
+    case 'case.resolutionDate':
+      return ctx.case.resolutionDate;
+    case 'case.effectiveDate':
+      return ctx.case.effectiveDate;
+    case 'firm.name':
+      return ctx.firm.name;
+    case 'firm.registrationNumber':
+      return ctx.firm.registrationNumber || null;
+    case 'firm.address':
+      return ctx.firm.address || null;
+    case 'firm.phone':
+      return ctx.firm.phone || null;
+    case 'firm.email':
+      return ctx.firm.email || null;
+    case 'today':
+      return ctx.preparedOn;
+  }
+  throw new Error(`Binding ${path} is not allowed.`);
+}
+
+/** Human source label shown beside a read-only bound value in the form. */
+export function bindingSourceLabel(path: string, asAt: string) {
+  const info = bindingInfo(path);
+  if (!info) return 'Unavailable source';
+  if (path.startsWith('selection.')) return `${info.description} (from your selection)`;
+  if (path === 'today') return 'Date of preparation';
+  return `${path.startsWith('company.') ? 'Company record' : path.startsWith('case.') ? 'Resolution case' : 'Firm settings'}: ${info.description} (as at ${asAt})`;
+}
+
+const RETIRED_JOB_SOURCES = {
+  'job.personName': 'personName',
+  'job.effectiveDate': 'effectiveDate',
+  'job.route': 'route',
+} as const;
+
+/** Retired records become questions with the same ids; stored templates remain unchanged.
+ * Frozen generation snapshots still resolve their original values for historical signing checks.
+ */
+export function fieldForCurrentRecords(
+  field: FieldDefinition,
+  frozenJob?: ResolutionContext['job'],
+): FieldDefinition {
+  if (field.source.kind !== 'binding' || !Object.hasOwn(RETIRED_JOB_SOURCES, field.source.path))
+    return field;
+  const key = RETIRED_JOB_SOURCES[field.source.path as keyof typeof RETIRED_JOB_SOURCES];
+  if (!key) return field;
+  return {
+    ...field,
+    // A binding always had to resolve, so its replacement question stays mandatory.
+    required: true,
+    source: frozenJob ? { kind: 'constant', value: frozenJob[key] ?? '' } : { kind: 'question' },
+  };
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>New company – Review</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+input,select,textarea{width:100%;height:40px;box-sizing:border-box;padding:0 10px;border:1px solid #b9c2c9;border-radius:4px;font:inherit;color:#252b32;background:#ffffff}
+.stp{display:block;padding:8px 10px;border-radius:3px;font-size:13px;color:#252b32;text-decoration:none}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 900px; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45; color: #252b32">
+<dc-import name="Companies" hint-size="1440px,900px"></dc-import>
+<div style="position: absolute; inset: 0; background: rgba(28, 45, 57, 0.32)"></div>
+<div role="dialog" aria-labelledby="nc-t" style="position: absolute; top: 0; right: 0; width: 650px; height: 900px; background: #ffffff; box-shadow: -12px 0 38px rgba(0, 0, 0, 0.12); display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 22px 32px; border-bottom: 1px solid #e0e3e6">
+<h2 id="nc-t" style="margin: 0; font-size: 17px; font-weight: 600">New company</h2>
+<a href="Companies.dc.html" aria-label="Close" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: #606972"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></a>
+</div>
+<div style="flex: 1 1 auto; min-height: 0; display: flex">
+<ol style="list-style: none; margin: 0; padding: 24px 12px; width: 140px; flex: none; border-right: 1px solid #e0e3e6; display: flex; flex-direction: column; gap: 2px">
+<li><a class="stp" href="NewCompany.dc.html">1 Company details</a></li>
+<li><a class="stp" href="NewCompanyBusiness.dc.html">2 Business details</a></li>
+<li><a class="stp" href="NewCompanyPeople.dc.html">3 People</a></li>
+<li><a class="stp" href="NewCompanyReview.dc.html" style="background: #284b5c; color: #ffffff">4 Review</a></li>
+</ol>
+<div style="flex: 1 1 auto; overflow: auto; padding: 24px 32px; display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 600">Review</h2>
+<section><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><h3 style="margin: 0; font-size: 15px; font-weight: 600">Company details</h3><a href="NewCompany.dc.html" style="font-size: 13px; font-weight: 500; color: #284b5c; text-decoration: none">Change</a></div><dl style="margin: 0"><div><dt style="font-size: 12px; color: #606972">Legal name</dt><dd style="margin: 2px 0 12px">Halia Foods Sdn. Bhd.</dd></div><div><dt style="font-size: 12px; color: #606972">Registration number</dt><dd style="margin: 2px 0 12px">202401004417</dd></div><div><dt style="font-size: 12px; color: #606972">Incorporation date</dt><dd style="margin: 2px 0 12px">8 Feb 2024</dd></div><div><dt style="font-size: 12px; color: #606972">Financial year end</dt><dd style="margin: 2px 0 12px">31 December</dd></div><div><dt style="font-size: 12px; color: #606972">Registered address</dt><dd style="margin: 2px 0 12px">5 Jalan Kenari, 47100 Puchong, Selangor</dd></div></dl></section>
+<section><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><h3 style="margin: 0; font-size: 15px; font-weight: 600">Business details</h3><a href="NewCompanyBusiness.dc.html" style="font-size: 13px; font-weight: 500; color: #284b5c; text-decoration: none">Change</a></div><dl style="margin: 0"><div><dt style="font-size: 12px; color: #606972">Industry</dt><dd style="margin: 2px 0 12px">Wholesale and retail trade</dd></div><div><dt style="font-size: 12px; color: #606972">Business activity</dt><dd style="margin: 2px 0 12px">Food distribution</dd></div></dl></section>
+<section><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><h3 style="margin: 0; font-size: 15px; font-weight: 600">People</h3><a href="NewCompanyPeople.dc.html" style="font-size: 13px; font-weight: 500; color: #284b5c; text-decoration: none">Change</a></div><dl style="margin: 0"><div><dt style="font-size: 12px; color: #606972">Siti Noor binti Ahmad</dt><dd style="margin: 2px 0 12px">Director, from incorporation date</dd></div></dl></section>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 16px 32px; border-top: 1px solid #e0e3e6">
+<a href="Companies.dc.html" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; box-sizing: border-box; border: 1px solid #cbd1d6; border-radius: 4px; color: #252b32; text-decoration: none">Cancel</a>
+<div style="display: flex; gap: 8px"><a href="NewCompanyPeople.dc.html" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; box-sizing: border-box; border: 1px solid #cbd1d6; border-radius: 4px; color: #252b32; text-decoration: none">Back</a> <button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 4px; background: #284b5c; color: #ffffff; font: inherit; font-weight: 500">Create company</button></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

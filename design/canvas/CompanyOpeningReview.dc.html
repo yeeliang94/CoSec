@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Review opening record – Meranti Trading Sdn. Bhd.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+select,textarea{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid #b9c2c9;border-radius:4px;font:inherit;color:#252b32;background:#ffffff}
+select{height:40px;padding:0 10px}
+select{-webkit-appearance:none;appearance:none;padding-right:34px !important;background-image:url(/_blob/6de67599c7c5d719bba71e3ae53a6245) !important;background-repeat:no-repeat !important;background-position:right 12px center !important;background-size:12px 12px !important}
+</style>
+</helmet>
+<div style="display: flex; min-height: 900px; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="companies" hint-size="208px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; padding: 30px 32px 50px; box-sizing: border-box">
+<dc-import name="CompanyHeader" tab="overview" hint-size="100%,190px"></dc-import>
+<section aria-label="Review opening record" style="max-width: 640px; margin-top: 24px; display: flex; flex-direction: column; gap: 20px">
+<div><label for="ev">Opening source evidence</label><select id="ev"><option>Fictional opening source (opening-2.txt)</option></select></div>
+<div><label for="rb">Review basis</label><textarea id="rb" rows="4">Checked against the SSM company profile dated 28 Oct 2026.</textarea></div>
+<div style="padding: 14px 0; border-top: 1px solid #e7eaed; border-bottom: 1px solid #e7eaed">
+<p style="margin: 0 0 12px">Confirm review of opening company record revision 1? The source and decision will be retained.</p>
+<div style="display: flex; gap: 8px">
+<button type="button" style="height: 36px; padding: 0 14px; border: 1px solid #cbd1d6; border-radius: 4px; background: #ffffff; font: inherit">Confirm opening record review</button>
+<a href="CompanyOverview.dc.html" style="display: inline-flex; align-items: center; height: 36px; padding: 0 6px; font-size: 13px; font-weight: 500">Keep editing</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>C Charges – Annual return 2026</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 8px 0;border-bottom:1px solid #e0e3e6}
+td{padding:12px 10px 12px 0;border-bottom:1px solid #e7eaed;white-space:nowrap;font-variant-numeric:tabular-nums}
+.num{text-align:right}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+.nav{display:inline-flex;align-items:center;height:36px;padding:0 14px;box-sizing:border-box;border:1px solid #cbd1d6;border-radius:4px;color:#252b32;text-decoration:none}
+</style>
+</helmet>
+<div style="display: flex; width: 1440px; height: 900px; overflow: hidden; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="annual" collapsed="{{yes}}" hint-size="56px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<dc-import name="AnnualReturnHeader" hint-size="100%,112px"></dc-import>
+<div style="flex: 1 1 0; min-height: 0; display: flex">
+<dc-import name="AnnualReturnSteps" step="c" hint-size="220px,788px"></dc-import>
+<section style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<div style="flex: 1 1 0; overflow: auto; padding: 24px 40px; display: flex; flex-direction: column; gap: 40px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 600">C Charges</h2>
+<section style="margin-top: -16px">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px"><h3 style="margin: 0; font-size: 15px; font-weight: 600">Charges outstanding at 15 Oct 2026</h3><a href="CompanyCharges.dc.html" style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border: 1px solid #cbd1d6; border-radius: 4px; color: #252b32; font-size: 13px; text-decoration: none">Open charges</a></div>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th>Registered no.</th><th>Registered</th><th>Nature</th><th>Chargee</th><th class="num" style="padding-right: 0">Amount (MYR)</th></tr></thead>
+<tbody><tr><td>202301004512</td><td>8 Feb 2023</td><td>Fixed charge</td><td>Bank Fiktif Berhad</td><td class="num" style="padding-right: 0">1,500,000.00</td></tr></tbody>
+</table>
+</section>
+<section style="max-width: 640px; display: flex; flex-direction: column; gap: 16px">
+<div><label for="ni">Explanatory notes on indebtedness</label><textarea id="ni" rows="4" style="width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit; resize: vertical"></textarea></div>
+<button type="button" style="align-self: flex-start; height: 36px; padding: 0 14px; border: 1px solid #cbd1d6; border-radius: 4px; background: #ffffff; font: inherit">Save</button>
+</section>
+</div>
+<footer style="display: flex; justify-content: space-between; padding: 14px 40px; border-top: 1px solid #e0e3e6">
+<a href="AnnualReturnShareCapital.dc.html" class="nav">Back</a>
+<a href="AnnualReturnOfficers.dc.html" class="nav">Continue</a>
+</footer>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

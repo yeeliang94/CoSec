@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Resolution settings – Meranti Trading Sdn. Bhd.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 10px 0;border-bottom:1px solid #e0e3e6}
+td{padding:14px 10px 14px 0;border-bottom:1px solid #e7eaed;white-space:nowrap}
+.lk{border:0;background:transparent;padding:0;font:inherit;font-size:13px;font-weight:500;color:#284b5c;cursor:pointer;margin-left:14px}
+</style>
+</helmet>
+<div style="display: flex; min-height: 900px; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="companies" hint-size="208px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; padding: 30px 32px 50px; box-sizing: border-box">
+<dc-import name="CompanyHeader" tab="settings" hint-size="100%,190px"></dc-import>
+<div style="display: flex; gap: 48px; margin-top: 28px">
+<div style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 52px">
+<section>
+<h2 style="margin: 0 0 12px; font-size: 17px; font-weight: 600">Constitution citations</h2>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th>Citation</th><th>Current wording</th><th>Effective</th><th style="padding-right: 0"></th></tr></thead>
+<tbody>
+<tr><td>Directors' authority</td><td>Clause 92 of the Constitution</td><td>15 Oct 2020</td><td style="padding-right: 0; text-align: right"><button type="button" class="lk">History</button><a href="CompanyChangeCitation.dc.html" class="lk" aria-label="Change Directors' authority" style="text-decoration: none">Change</a></td></tr>
+<tr><td>Members' authority</td><td>Section 297 of the Companies Act 2016</td><td>15 Oct 2020</td><td style="padding-right: 0; text-align: right"><button type="button" class="lk">History</button><button type="button" class="lk">Change</button></td></tr>
+<tr><td>Election of directors</td><td></td><td></td><td style="padding-right: 0; text-align: right"><button type="button" class="lk">Change</button></td></tr>
+</tbody>
+</table>
+</section>
+<section>
+<h2 style="margin: 0 0 12px; font-size: 17px; font-weight: 600">Company custom values</h2>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th>Field</th><th>Current value</th><th>Effective</th><th style="padding-right: 0"></th></tr></thead>
+<tbody><tr><td>Common seal kept</td><td>No</td><td>15 Oct 2020</td><td style="padding-right: 0; text-align: right"><button type="button" class="lk">History</button><button type="button" class="lk">Change</button></td></tr></tbody>
+</table>
+</section>
+</div>
+<dc-import name="CompanyDetails" hint-size="320px,420px"></dc-import>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

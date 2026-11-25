@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Resolution live preview</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+.fv{background:#eef2f4;border-radius:2px;padding:0 3px}
+</style>
+</helmet>
+<section aria-label="Preview" style="height: 100%; min-height: 812px; box-sizing: border-box; background: #f5f7f8; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 24px; height: 46px; border-bottom: 1px solid #e0e3e6; background: #ffffff">
+<div style="display: flex; align-items: center; gap: 14px">
+<strong style="font-weight: 600">Preview</strong>
+<sc-if value="{{missing}}" hint-placeholder-val="{{ true }}">
+<span style="display: inline-flex; align-items: center; gap: 6px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5f4c24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg>1 item missing</span>
+<a href="#" style="font-weight: 500; display: inline-flex; align-items: center; gap: 4px">Go to next<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></a>
+</sc-if>
+</div>
+<div style="display: flex; gap: 16px">
+<button type="button" style="border: 0; background: transparent; font: inherit; color: #252b32; cursor: pointer; padding: 4px 0">Hide field shading</button>
+<button type="button" style="border: 0; background: transparent; font: inherit; color: #252b32; cursor: pointer; padding: 4px 0">Actual size</button>
+</div>
+</div>
+<div style="flex: 1 1 auto; overflow: auto; padding: 22px 48px">
+<article style="max-width: 790px; margin: 0 auto; background: #ffffff; border: 1px solid #e0e3e6; padding: 80px 90px 70px; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; min-height: 640px">
+<div style="font-size: 11px">MERANTI TRADING SDN. BHD.</div>
+<div style="text-align: center; margin-top: 18px"><span class="fv">MERANTI TRADING SDN. BHD.</span></div>
+<div style="text-align: center; margin-top: 8px">(Registration No. <span class="fv">202000000002</span>)</div>
+<div style="text-align: center; margin-top: 10px; font-size: 16px; font-weight: 700">DIRECTORS' WRITTEN RESOLUTION</div>
+<p style="margin: 14px 0 0">Pursuant to <span class="fv">Clause 92 of the Constitution</span>, we, the undersigned, being all the directors of the Company, resolve as follows:</p>
+<p style="margin: 14px 0 0; font-weight: 700">1.&nbsp;&nbsp;&nbsp;Appointment of director</p>
+<p style="margin: 6px 0 0 22px">THAT <span class="fv">Siti Noor binti Ahmad</span>, having consented to act, be and is hereby appointed as a director of the Company with effect from <sc-if value="{{missing}}" hint-placeholder-val="{{ true }}"><span class="fv" style="background: #fdf8f8; outline: 1px dashed #a83230; color: #a83230">[Appointment date]</span></sc-if><sc-if value="{{filled}}" hint-placeholder-val="{{ false }}"><span class="fv">1 December 2026</span></sc-if>.</p>
+<p style="margin: 14px 0 0">Dated: <span class="fv">21 November 2026</span></p>
+<p style="margin: 22px 0 0; font-weight: 700">Directors</p>
+<div style="display: flex; gap: 48px; margin-top: 46px">
+<div style="width: 200px"><div style="border-top: 1px solid #252b32; padding-top: 6px">Siti Noor binti Ahmad</div></div>
+<div style="width: 200px"><div style="border-top: 1px solid #252b32; padding-top: 6px">Lim Wei Jie</div></div>
+</div>
+<div style="margin-top: 40px; padding-top: 6px; border-top: 1px solid #e0e3e6; font-size: 10px">DIRECTORS' WRITTEN RESOLUTION</div>
+</article>
+</div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"filled":{"editor":"boolean","default":false},"$preview":{"width":960,"height":812}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const filled = !!this.props.filled;
+    return { filled, missing: !filled };
+  }
+}
+</script>
+</body>
+</html>

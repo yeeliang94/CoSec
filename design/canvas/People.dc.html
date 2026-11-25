@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>People – CoSec Workspace</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+.tab{border:0;background:transparent;font:inherit;padding:8px 0 10px;color:#606972;cursor:pointer}
+.row{display:block;padding:10px 12px;border-radius:3px;color:#252b32;text-decoration:none}
+.row:hover{background:#f8fafb;text-decoration:none}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 8px 0;border-bottom:1px solid #e0e3e6}
+td{padding:12px 10px 12px 0;border-bottom:1px solid #e7eaed;white-space:nowrap}
+.sec{height:32px;padding:0 12px;border:1px solid #cbd1d6;border-radius:4px;background:#ffffff;font:inherit;font-size:13px;color:#252b32;cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
+select{-webkit-appearance:none;appearance:none;padding-right:34px !important;background-image:url(/_blob/6de67599c7c5d719bba71e3ae53a6245) !important;background-repeat:no-repeat !important;background-position:right 12px center !important;background-size:12px 12px !important}
+</style>
+</helmet>
+<div style="display: flex; min-height: 900px; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="people" hint-size="208px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; padding: 30px 32px 50px; box-sizing: border-box">
+<header style="display: flex; align-items: center; justify-content: space-between">
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.45px; line-height: 1.3">People</h1>
+<a href="PeopleNewPerson.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; box-sizing: border-box; border: 0; border-radius: 4px; background: #284b5c; color: #ffffff; font: inherit; font-weight: 500; text-decoration: none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New person</a>
+</header>
+<div role="tablist" style="display: flex; gap: 24px; margin-top: 18px; border-bottom: 1px solid #e0e3e6">
+<button type="button" role="tab" class="tab" aria-selected="true" style="color: #252b32; font-weight: 500; border-bottom: 2px solid #284b5c; margin-bottom: -1px">Individuals</button>
+<button type="button" role="tab" class="tab" aria-selected="false">Organisations</button>
+</div>
+<div style="display: flex; margin-top: 20px; border-top: 0">
+<section aria-label="People list" style="width: 380px; flex: none; padding-right: 20px; border-right: 1px solid #e0e3e6">
+<input type="search" aria-label="Search people" placeholder="Search by name" style="width: 100%; height: 35px; box-sizing: border-box; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit">
+<select aria-label="Company" style="width: 100%; height: 35px; margin-top: 8px; padding: 0 10px; border: 1px solid #b9c2c9; border-radius: 4px; font: inherit; background: #ffffff"><option>All companies</option></select>
+<nav style="margin-top: 12px; display: flex; flex-direction: column; gap: 2px">
+<a class="row" href="#" style="background: #f0f4f6"><div style="font-weight: 600">Adrian Lee</div><div style="font-size: 12px; color: #606972">Aster Advisory Sdn. Bhd., Director</div></a>
+<a class="row" href="#"><div style="font-weight: 600">Chong Wei</div><div style="font-size: 12px; color: #606972">Linden Ventures Sdn. Bhd., Director</div></a>
+<a class="row" href="#"><div style="font-weight: 600">Farah Hassan</div><div style="font-size: 12px; color: #606972">Bayu Services Sdn. Bhd., Director and 1 more</div></a>
+<a class="row" href="#"><div style="font-weight: 600">Lim Wei Jie</div><div style="font-size: 12px; color: #606972">Meranti Trading Sdn. Bhd., Director</div></a>
+<a class="row" href="#"><div style="font-weight: 600">Nadia Aziz</div><div style="font-size: 12px; color: #606972">Cedar Field Sdn. Bhd., Director</div></a>
+<a class="row" href="#"><div style="font-weight: 600">Ravi Kumar</div><div style="font-size: 12px; color: #606972">Ruang Studio Sdn. Bhd., Director</div></a>
+<a class="row" href="#"><div style="font-weight: 600">Siti Noor binti Ahmad</div><div style="font-size: 12px; color: #606972">Needs review, Meranti Trading Sdn. Bhd., Director</div></a>
+<a class="row" href="#"><div style="font-weight: 600">Tan Mei Ling</div><div style="font-size: 12px; color: #606972">Not linked yet</div></a>
+</nav>
+</section>
+<section aria-label="Adrian Lee" style="flex: 1 1 0; min-width: 0; padding-left: 40px; display: flex; flex-direction: column; gap: 44px">
+<div>
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h2 style="margin: 0; font-size: 21px; font-weight: 600">Adrian Lee</h2>
+<div style="display: flex; gap: 8px"><a href="PeopleCorrectDetails.dc.html" class="sec">Edit</a><a href="AddToCompany.dc.html" class="sec">Add to a company</a></div>
+</div>
+<div style="margin-top: 10px; font-size: 12px; color: #606972">Email</div><div>adrian.lee@example.com</div>
+</div>
+<section>
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px"><h3 style="margin: 0; font-size: 17px; font-weight: 600">Particulars</h3><a href="PersonParticulars.dc.html" style="font-size: 13px; font-weight: 500">Edit particulars</a></div>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th>Particular</th><th>Value</th><th style="padding-right: 0">From</th></tr></thead>
+<tbody>
+<tr><td>ID type</td><td>MyKad</td><td style="padding-right: 0">15 Sep 2020</td></tr>
+<tr><td>ID number</td><td>820704-08-5531</td><td style="padding-right: 0">15 Sep 2020</td></tr>
+<tr><td>Nationality</td><td>Malaysian</td><td style="padding-right: 0">15 Sep 2020</td></tr>
+<tr><td>Residential address</td><td>8 Jalan Bukit, Petaling Jaya</td><td style="padding-right: 0">15 Sep 2020</td></tr>
+<tr><td>Occupation</td><td>Accountant</td><td style="padding-right: 0">15 Sep 2020</td></tr>
+</tbody>
+</table>
+</section>
+<section>
+<h3 style="margin: 0 0 10px; font-size: 17px; font-weight: 600">Companies</h3>
+<table style="width: 100%; border-collapse: collapse">
+<thead><tr><th>Company</th><th>Role</th><th>From</th><th>Until</th><th style="padding-right: 0">Source</th></tr></thead>
+<tbody><tr><td><a href="CompanyOverview.dc.html" style="font-weight: 600">Aster Advisory Sdn. Bhd.</a></td><td>Director</td><td>15 Sep 2020</td><td></td><td style="padding-right: 0">Officer record</td></tr></tbody>
+</table>
+</section>
+<section>
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px"><h3 style="margin: 0; font-size: 17px; font-weight: 600">Other directorships</h3><a href="PeopleOtherDirectorships.dc.html" style="font-size: 13px; font-weight: 500">Edit other directorships</a></div>
+<p style="margin: 0; color: #606972">No directorships outside the workspace recorded</p>
+</section>
+<section>
+<div style="display: flex; align-items: center; justify-content: space-between"><h3 style="margin: 0; font-size: 17px; font-weight: 600">Custom values</h3><a href="PeopleCustomValue.dc.html" style="font-size: 13px; font-weight: 500">Set a custom value</a></div>
+</section>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

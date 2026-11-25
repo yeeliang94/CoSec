@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Director appointment resolution – Layout – CoSec Workspace</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+.pt{color:#606972;padding:12px 0 10px;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;background:transparent;font:inherit;cursor:pointer}
+.fl{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:13px}
+.tb{height:30px;border:0;background:transparent;border-radius:3px;color:#4f5c65;font:inherit;font-size:13px;padding:0 8px;cursor:pointer}
+.chip{background:#eef2f4;border:1px solid #d4e4eb;border-radius:3px;padding:0 5px;font-size:13px}
+.disc{border:0;background:transparent;padding:0;font:inherit;font-size:13px;font-weight:500;color:#284b5c;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+select,input{width:100%;height:40px;box-sizing:border-box;padding:0 10px;border:1px solid #b9c2c9;border-radius:4px;font:inherit;color:#252b32;background:#ffffff}
+select{-webkit-appearance:none;appearance:none;padding-right:34px !important;background-image:url(/_blob/6de67599c7c5d719bba71e3ae53a6245) !important;background-repeat:no-repeat !important;background-position:right 12px center !important;background-size:12px 12px !important}
+</style>
+</helmet>
+<div style="display: flex; width: 1440px; height: 900px; overflow: hidden; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="resolutions" collapsed="{{yes}}" hint-size="56px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<header style="display: flex; align-items: flex-end; justify-content: space-between; padding: 18px 24px 12px 24px; border-bottom: 1px solid #e0e3e6">
+<div>
+<a href="TemplatesLayouts.dc.html" style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #606972"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Templates</a>
+<h1 style="margin: 4px 0 0; font-size: 21px; font-weight: 600; line-height: 1.3">Director appointment resolution</h1>
+</div>
+<div style="display: flex; align-items: center; gap: 16px; font-size: 13px">
+<span>Version 1, published</span>
+<button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 4px; background: #284b5c; color: #ffffff; font: inherit; font-size: 14px; font-weight: 500">Create new version</button>
+</div>
+</header>
+<div style="flex: 1 1 0; min-height: 0; display: flex">
+<aside aria-label="Shared questions" style="width: 260px; flex: none; padding: 20px; border-right: 1px solid #e0e3e6; overflow: auto">
+<h2 style="margin: 0 0 10px; font-size: 15px; font-weight: 600">Shared questions</h2>
+<input type="search" aria-label="Find a field" placeholder="Find a field" style="height: 35px">
+<div style="margin-top: 8px">
+<div class="fl"><span>Resolution date</span><button type="button" class="disc">Insert</button></div>
+<div class="fl"><span>Company name</span><button type="button" class="disc">Insert</button></div>
+<div class="fl"><span>Registration number</span><button type="button" class="disc">Insert</button></div>
+<div class="fl"><span>Directors' authority</span><button type="button" class="disc">Insert</button></div>
+</div>
+</aside>
+<section aria-label="Layout wording" style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; border-right: 1px solid #e0e3e6">
+<div role="toolbar" aria-label="Formatting" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; padding: 6px 20px; border-bottom: 1px solid #e0e3e6">
+<button type="button" class="tb" style="font-weight: 700">B</button><button type="button" class="tb" style="font-style: italic">I</button><button type="button" class="tb">Field</button><button type="button" class="tb">Condition</button><button type="button" class="tb">Wording slot</button><button type="button" class="tb">Signatures</button>
+</div>
+<div style="flex: 1 1 0; overflow: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px">
+<section><h3 style="margin: 0 0 6px; font-size: 13px; font-weight: 500; color: #606972">Header</h3>
+<p style="margin: 0; text-align: center"><span class="chip">Company name</span><br>(Registration No. <span class="chip">Registration number</span>)</p>
+<p style="margin: 8px 0 0; text-align: center; font-weight: 700">DIRECTORS' WRITTEN RESOLUTION</p>
+<p style="margin: 8px 0 0">Pursuant to <span class="chip">Directors' authority</span>, we, the undersigned, being all the directors of the Company, resolve as follows:</p></section>
+<div style="border: 1px dashed #b9c2c9; border-radius: 4px; padding: 16px; text-align: center; color: #606972">Selected wording appears here</div>
+<section><h3 style="margin: 0 0 6px; font-size: 13px; font-weight: 500; color: #606972">Closing</h3>
+<p style="margin: 0">Dated: <span class="chip">Resolution date</span></p></section>
+<section><h3 style="margin: 0 0 8px; font-size: 15px; font-weight: 600">Starting wording</h3>
+<ol style="margin: 0; padding: 0; list-style: none; border-top: 1px solid #e7eaed"><li style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e7eaed">Appointment of director<button type="button" class="disc" style="color: #606972">Remove</button></li></ol>
+<button type="button" class="disc" style="margin-top: 10px">Add from library</button></section>
+</div>
+</section>
+<aside aria-label="Settings" style="width: 420px; flex: none; display: flex; flex-direction: column">
+<div role="tablist" style="display: flex; gap: 22px; padding: 0 20px; border-bottom: 1px solid #e0e3e6">
+<button type="button" role="tab" class="pt" aria-selected="false">Preview</button>
+<button type="button" role="tab" class="pt" aria-selected="true" style="color: #252b32; font-weight: 500; border-bottom-color: #284b5c">Settings</button>
+<button type="button" role="tab" class="pt" aria-selected="false">Versions</button>
+</div>
+<div style="flex: 1 1 0; overflow: auto; padding: 20px; display: flex; flex-direction: column; gap: 36px">
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h3 style="margin: 0; font-size: 15px; font-weight: 600">Signatures</h3>
+<div><label for="co">Columns</label><select id="co"><option>2</option></select></div>
+<div><label for="lu">Label under each line</label><select id="lu"><option>Name</option></select></div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h3 style="margin: 0; font-size: 15px; font-weight: 600">Page layout</h3>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div><label for="ps">Page size</label><select id="ps"><option>A4</option></select></div>
+<div><label for="fs">Font size (pt)</label><input id="fs" value="11"></div>
+</div>
+<div><label for="fo">Font</label><select id="fo"><option>Arial</option></select></div>
+<div><label for="mg">Margins (mm)</label><input id="mg" value="25"></div>
+</section>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

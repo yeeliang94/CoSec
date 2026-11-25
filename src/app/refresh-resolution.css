@@ -1,0 +1,59 @@
+/* Cancelling is a quiet neutral action, flush with the section edge */
+.send-review .cancel-link {
+  margin-top: 16px;
+  padding-left: 0;
+  padding-right: 0;
+  border: 0;
+  color: var(--muted);
+}
+.send-review .cancel-link:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+.send-review .confirmation {
+  margin-top: 16px;
+}
+
+/* History entries */
+.case-history strong {
+  font-weight: 600;
+}
+
+/* Preview issues line up under their heading */
+.document-preview .warning ul {
+  margin: 6px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+/* Action buttons in table cells line up with the row text and column header */
+.record-split td > button,
+.record-split td > .action-form .actions > button {
+  min-height: 24px;
+  height: auto;
+  margin: -4px 0;
+  padding: 3px 0;
+  border-color: transparent;
+  background: transparent;
+  vertical-align: top;
+}
+.record-split td > button:hover {
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Documents of a director-change case: one row per document, the one being prepared in bold */
+.document-set {
+  margin-bottom: var(--space-section);
+}
+.document-set h2 {
+  margin-bottom: var(--space-sm);
+}
+.document-set-table tr[aria-current='true'] td:first-child {
+  font-weight: 600;
+}
+.document-set-table td.col-action {
+  text-align: right;
+  white-space: nowrap;
+}

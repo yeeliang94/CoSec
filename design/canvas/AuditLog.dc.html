@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Audit log – CoSec Workspace</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+.f{width:100%;height:35px;box-sizing:border-box;padding:0 10px;border:1px solid #b9c2c9;border-radius:4px;font:inherit;color:#252b32;background:#ffffff}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 10px 0;border-bottom:1px solid #e0e3e6}
+td{padding:14px 10px 14px 0;border-bottom:1px solid #e7eaed;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lk{border:0;background:transparent;padding:0;font:inherit;font-size:13px;font-weight:500;color:#284b5c;cursor:pointer}
+select{-webkit-appearance:none;appearance:none;padding-right:34px !important;background-image:url(/_blob/6de67599c7c5d719bba71e3ae53a6245) !important;background-repeat:no-repeat !important;background-position:right 12px center !important;background-size:12px 12px !important}
+</style>
+</helmet>
+<div style="display: flex; min-height: 900px; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="settings" hint-size="208px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; padding: 30px 32px 50px; box-sizing: border-box">
+<a href="Settings.dc.html" style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #606972"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Settings</a>
+<header style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.45px; line-height: 1.3">Audit log</h1>
+<button type="button" style="height: 36px; padding: 0 14px; border: 1px solid #cbd1d6; border-radius: 4px; background: #ffffff; font: inherit">Export CSV</button>
+</header>
+<form style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 20px; align-items: end">
+<div><label for="c">Company</label><select id="c" class="f"><option>All companies</option></select></div>
+<div><label for="rt">Record type</label><select id="rt" class="f"><option>All types</option><option>Resolution</option><option>Wording</option></select></div>
+<div><label for="ac">Action</label><input id="ac" class="f"></div>
+<div><label for="at">Actor</label><select id="at" class="f"><option>Anyone</option></select></div>
+<div><label for="fr">From</label><input id="fr" class="f" placeholder="dd/mm/yyyy"></div>
+<div><label for="to">To</label><input id="to" class="f" placeholder="dd/mm/yyyy"></div>
+</form>
+<div style="display: flex; align-items: center; gap: 16px; margin-top: 12px">
+<button type="button" style="height: 35px; padding: 0 14px; border: 1px solid #cbd1d6; border-radius: 4px; background: #ffffff; font: inherit">Apply filters</button>
+<span style="color: #606972; font-size: 13px">50 of 822 entries</span>
+</div>
+<table style="width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed">
+<thead><tr><th style="width: 13%">Time</th><th style="width: 12%">Actor</th><th style="width: 17%">Company</th><th style="width: 22%">Action</th><th style="width: 10%">Record</th><th style="width: 8%">Reference</th><th style="width: 8%">Reason</th><th style="width: 10%; padding-right: 0"></th></tr></thead>
+<tbody>
+<tr><td>16 Nov 2026, 09:17</td><td>Aina Rahman</td><td>Bayu Services Sdn. Bhd.</td><td>Resolution wording selection changed</td><td>Resolution</td><td>2be529</td><td></td><td style="padding-right: 0; text-align: right"><button type="button" class="lk">Hide details</button></td></tr>
+<tr><td colspan="8" style="padding: 12px 0 18px; background: #f8fafb; white-space: normal">
+<table style="width: 60%; border-collapse: collapse; margin-left: 16px"><thead><tr><th>Field</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Wording</td><td>Appointment of director</td><td>Appointment of director, Authority to sign documents</td></tr></tbody></table>
+</td></tr>
+<tr><td>16 Nov 2026, 09:17</td><td>Aina Rahman</td><td>Bayu Services Sdn. Bhd.</td><td>Resolution created</td><td>Resolution</td><td>2be529</td><td></td><td style="padding-right: 0; text-align: right"><button type="button" class="lk">Show details</button></td></tr>
+<tr><td>15 Nov 2026, 23:55</td><td>Aina Rahman</td><td>Bayu Services Sdn. Bhd.</td><td>Resolution answers saved</td><td>Resolution</td><td>f10758</td><td></td><td style="padding-right: 0; text-align: right"><button type="button" class="lk">Show details</button></td></tr>
+<tr><td>3 Nov 2026, 23:11</td><td>Owner administrator</td><td>Bayu Services Sdn. Bhd.</td><td>Resolution details updated</td><td>Resolution</td><td>797873</td><td></td><td style="padding-right: 0; text-align: right"><button type="button" class="lk">Show details</button></td></tr>
+<tr><td>3 Nov 2026, 22:51</td><td>Owner administrator</td><td>Meranti Trading Sdn. Bhd.</td><td>Officer appointment recorded</td><td>Company relationship</td><td>a41c02</td><td>Form 49 received</td><td style="padding-right: 0; text-align: right"><button type="button" class="lk">Show details</button></td></tr>
+</tbody>
+</table>
+<button type="button" style="margin-top: 20px; height: 36px; padding: 0 14px; border: 1px solid #cbd1d6; border-radius: 4px; background: #ffffff; font: inherit">Load more</button>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,642 @@
+/* Redesign of 3 November 2026: templates and the template builder. See DESIGN.md. */
+
+/* Templates list: one line per cell, one icon menu per row */
+.tl-toolbar {
+  align-items: center;
+  gap: var(--space-sm);
+}
+.tl-toolbar .search {
+  flex: none;
+  width: 280px;
+}
+.tl-toolbar label:not(.search) {
+  width: 180px;
+}
+.tl-table {
+  width: 100%;
+  table-layout: fixed;
+}
+.tl-table th:first-child {
+  width: 32%;
+}
+.tl-table td {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tl-table td a:focus-visible {
+  outline-offset: -2px;
+}
+.tl-table .tl-date {
+  font-variant-numeric: tabular-nums;
+}
+.tl-table .tl-actions {
+  width: 56px;
+  padding-right: 0;
+  overflow: visible;
+  text-align: right;
+}
+.tl-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  min-height: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--action-text);
+}
+.tl-more:hover,
+.tl-more[aria-expanded='true'] {
+  background: var(--selection);
+}
+.tl-menu {
+  position: fixed;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  width: 216px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  box-shadow: var(--shadow-menu);
+  font-weight: 400;
+  text-align: left;
+  white-space: normal;
+}
+.tl-menu button {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  padding: var(--space-sm) 10px;
+  border: 0;
+  border-radius: 3px;
+  background: none;
+  color: var(--ink);
+  font-size: var(--text-small);
+  font-weight: 400;
+  text-align: left;
+}
+.tl-menu button:hover,
+.tl-menu button:focus-visible {
+  background: var(--row-hover);
+}
+.tl-menu button:focus-visible {
+  outline-offset: -2px;
+}
+.tl-menu .danger-item {
+  color: var(--danger);
+}
+.empty p {
+  margin: 0;
+}
+
+/* Template builder: fills the focus layout, with three panes that scroll on their own */
+.tb,
+.tb-loading {
+  flex: 1;
+  height: 100%;
+  min-height: 0;
+}
+.tb {
+  display: flex;
+  flex-direction: column;
+}
+.tb[data-dirty] > * {
+  flex: none;
+}
+.tb > .tb-panes {
+  flex: 1;
+}
+.tb-loading {
+  padding: var(--space-lg) var(--space-section);
+  overflow-y: auto;
+}
+.tb .lifecycle {
+  padding: var(--space-lg) var(--space-section) 14px;
+}
+.tb .editor-header {
+  align-items: flex-end;
+  gap: var(--space-section);
+  margin: 0;
+}
+.tb .editor-header > :first-child {
+  min-width: 0;
+}
+.tb .editor-header .back-link {
+  margin: 0 0 var(--space-xs);
+  font-size: var(--text-meta);
+  color: var(--muted);
+}
+.tb .editor-header h1 {
+  font-size: var(--text-section);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tb .editor-actions {
+  gap: var(--space-lg);
+}
+.tb .lifecycle-state {
+  margin: 0;
+  font-size: var(--text-small);
+  white-space: nowrap;
+}
+.tb-save-state {
+  font-size: var(--text-meta);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tb-save-state.failed {
+  color: var(--danger);
+}
+.tb .lifecycle .warning {
+  margin: var(--space-sm) 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+}
+.tb .lifecycle .feedback,
+.tb .lifecycle > .success {
+  margin: var(--space-sm) 0 0;
+}
+.tb .lifecycle form.confirmation {
+  max-height: 40vh;
+  margin: var(--space-md) 0 0;
+  overflow-y: auto;
+}
+
+/* One quiet line each: a failed save, a read-only version, the validation summary */
+.tb-notice,
+.tb-read-only {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0;
+}
+.tb-notice svg,
+.tb-read-only svg,
+.tb-issues svg {
+  flex: none;
+}
+.tb > .tb-notice {
+  padding: 0 var(--space-section) var(--space-md);
+  color: var(--danger);
+}
+.tb-read-only {
+  padding: 14px var(--space-section) 0;
+}
+.tb-read-only svg {
+  color: var(--warning-text);
+}
+.tb-issues {
+  max-height: 180px;
+  margin: 0;
+  padding: 0 var(--space-section) var(--space-md);
+  overflow-y: auto;
+}
+.tb-issues > summary {
+  gap: var(--space-sm);
+  color: var(--ink);
+  font-size: var(--text-body);
+  font-weight: 400;
+}
+.tb-issues > summary svg {
+  color: var(--warning-text);
+}
+.tb-issues.blocking > summary svg {
+  color: var(--danger);
+}
+.tb-issues ul {
+  margin: var(--space-sm) 0 0;
+  padding-left: 25px;
+}
+.tb-issues .text-button {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.tb-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--primary);
+  font-size: var(--text-small);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.tb-link:hover:not(:disabled) {
+  background: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.tb-link:disabled {
+  background: none;
+  color: var(--muted);
+}
+
+/* The panes */
+.tb-panes {
+  display: flex;
+  min-height: 0;
+  border-top: 1px solid var(--border);
+}
+.tb-fields {
+  flex: none;
+  width: 264px;
+  min-height: 0;
+  padding: 14px var(--space-md) var(--space-lg);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+.tb-centre {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.tb-fields,
+.tb-centre-scroll,
+.tb-side-panel {
+  position: relative;
+}
+.tb-centre-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+.tb-side {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  width: 480px;
+  min-height: 0;
+  border-left: 1px solid var(--border);
+  background: var(--table-header);
+}
+.tb-side-panel {
+  flex: 1;
+  min-height: 0;
+  padding: var(--space-lg) var(--space-xl) var(--space-section);
+  overflow-y: auto;
+}
+.tb-side-panel[hidden] {
+  display: none;
+}
+
+/* Pane tabs: dark medium text with a primary underline */
+.tb .tb-tabs,
+.tb .wording-tabs {
+  display: flex;
+  flex: none;
+  gap: var(--space-section);
+  max-width: none;
+  margin: 0;
+  padding: 0 var(--space-section);
+  overflow-x: auto;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--surface);
+}
+.tb .tb-tabs [role='tab'],
+.tb .wording-tabs [role='tab'] {
+  flex: none;
+  min-height: 0;
+  padding: 13px 0 11px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  font-size: var(--text-small);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.tb .tb-tabs [role='tab'][aria-selected='true'],
+.tb .wording-tabs [role='tab'][aria-selected='true'] {
+  border-bottom-color: var(--primary);
+  background: none;
+  color: var(--ink);
+}
+.tb .tb-tabs [role='tab']:focus-visible {
+  outline-offset: -2px;
+}
+
+/* Fields pane */
+.tb-fields .template-inspector {
+  position: relative;
+  gap: var(--space-md);
+}
+.tb-fields .template-inspector > h2 {
+  margin: 0;
+  padding: 0 var(--space-sm);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+.tb-new-field > summary {
+  position: absolute;
+  top: 0;
+  right: var(--space-sm);
+  color: var(--primary);
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+.tb-new-field > .form-stack {
+  padding: 0 var(--space-sm);
+}
+.tb-field-search {
+  padding: 0 var(--space-sm);
+}
+.tb-field-search input {
+  min-height: 32px;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--text-small);
+}
+.tb-field-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tb-field-list li {
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+}
+.tb-field-list li.selected {
+  background: var(--selection);
+}
+.tb-field-row {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: 0;
+  min-height: 0;
+  padding: 9px var(--space-sm);
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: var(--text-small);
+  font-weight: 400;
+  text-align: left;
+}
+.tb-field-row:hover {
+  background: var(--row-hover);
+}
+.tb-field-list li.selected .tb-field-row:hover {
+  background: none;
+}
+.tb-field-row:focus-visible,
+.tb-field-insert:focus-visible {
+  outline-offset: -2px;
+}
+.tb-field-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tb-field-unused {
+  flex: none;
+  color: var(--muted);
+  font-size: var(--text-meta);
+}
+.tb-field-insert {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  min-height: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--action-text);
+}
+.tb-field-insert:hover:not(:disabled) {
+  background: var(--selection);
+  color: var(--ink);
+}
+.tb-field-insert:disabled {
+  background: none;
+  color: var(--input-border);
+}
+.tb-field-insert svg {
+  width: 13px;
+  height: 13px;
+}
+.tb-fields .field-pick-list li {
+  padding: 2px 0 2px var(--space-sm);
+  border-bottom: 0;
+  font-size: var(--text-small);
+}
+.tb-fields .tb-disclosure {
+  padding: 0 var(--space-sm);
+}
+.tb-fields .inspector-section {
+  margin-top: var(--space-md);
+  padding: 0 var(--space-sm);
+  border-bottom: 0;
+}
+.tb-fields .field-editor {
+  margin-top: 0;
+  padding: 0;
+  background: none;
+}
+
+/* Centre pane: the toolbar stays visible while the wording scrolls beneath it */
+.tb-centre .wording-actions {
+  margin: 0;
+  padding: var(--space-md) var(--space-section) 0;
+  font-size: var(--text-small);
+}
+.tb-centre .wording-actions label {
+  width: 200px;
+}
+.tb-centre .template-editor {
+  border: 0;
+  border-radius: 0;
+  background: var(--surface);
+}
+.tb-centre .template-toolbar {
+  gap: 2px var(--space-sm);
+  padding: 6px var(--space-xl);
+  border-radius: 0;
+  border-bottom: 1px solid var(--row-border);
+  background: var(--surface);
+}
+.tb-centre .template-toolbar button {
+  min-height: 28px;
+  padding: 0 7px;
+  color: var(--action-text);
+}
+.tb-centre .template-toolbar button:hover:not(:disabled) {
+  background: var(--selection);
+  color: var(--ink);
+}
+.tb-centre .template-toolbar select {
+  min-height: 28px;
+}
+.tb-centre .template-canvas {
+  padding: var(--space-section);
+}
+.tb-centre .template-canvas .tiptap {
+  max-width: 680px;
+  min-height: 240px;
+  padding: 0;
+  border: 0;
+}
+.tb-parts .template-main {
+  padding: var(--space-lg) var(--space-section);
+}
+.tb-parts .template-editor {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.tb-parts .template-toolbar {
+  padding: 6px var(--space-sm);
+}
+.tb-parts .template-canvas {
+  padding: var(--space-lg);
+}
+.tb-parts .canvas-label {
+  color: var(--table-header-text);
+  font-size: var(--text-meta);
+  font-weight: 400;
+}
+.tb-parts .canvas-label[data-active='true'] {
+  color: var(--ink);
+  font-weight: 500;
+}
+.tb-parts .selected-wording-slot {
+  margin-top: var(--space-lg);
+}
+.tb-parts > section {
+  padding: var(--space-section);
+}
+.tb-parts .add-starter {
+  margin: var(--space-lg) 0 0;
+}
+
+/* Right pane */
+.tb-preview > .tb-disclosure {
+  margin-bottom: var(--space-md);
+}
+.tb-preview .tb-notice {
+  margin-bottom: var(--space-md);
+  color: var(--danger);
+}
+.tb-preview .document-scroll {
+  margin-top: var(--space-md);
+  padding: 0;
+  border: 0;
+  background: none;
+  overflow-x: visible;
+}
+/* The page reflows to the pane; its true margins apply in the downloaded sample. */
+.tb-preview .document-page {
+  min-height: 420px;
+  padding: var(--space-page) !important;
+  border-color: var(--border);
+}
+.tb-preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+  margin: var(--space-md) 0 0;
+}
+.tb-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.tb-settings .plain-fieldset {
+  min-width: 0;
+}
+.tb-settings .form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xl) var(--space-lg);
+  max-width: none;
+}
+.tb-settings .form-grid > label:not(.full) {
+  min-width: 0;
+}
+.tb-settings .form-footer {
+  grid-column: 1 / -1;
+}
+.tb-settings fieldset.full > label.inline {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--row-border);
+}
+.tb-settings .section {
+  margin: 0;
+}
+.tb-settings .section + .section {
+  margin-top: 40px;
+}
+.tb-settings .section h2 {
+  margin: 0 0 var(--space-lg);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+.tb-side-panel .version-list {
+  margin: 0;
+}
+
+/* Running header and footer: one line of text with field chips */
+.running-line {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.running-line-label {
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+.inline-editor {
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  background: var(--surface);
+  min-width: 0;
+}
+.inline-editor:focus-within {
+  border-color: var(--primary);
+}
+.inline-editor-toolbar {
+  align-items: center;
+  border-radius: 4px 4px 0 0;
+}
+.inline-editor-toolbar select {
+  width: auto;
+  min-height: 32px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-left: auto;
+  font-size: var(--text-meta);
+}
+.inline-editor-canvas .tiptap {
+  min-height: 0;
+  max-width: none;
+  padding: 8px 10px;
+}
+.inline-editor-canvas .tiptap p {
+  margin: 0;
+}

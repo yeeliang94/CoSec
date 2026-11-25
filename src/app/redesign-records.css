@@ -1,0 +1,378 @@
+/* Redesign of 3 November 2026: company record and people. See DESIGN.md. */
+
+/* Record tables: fixed columns, one line per cell, full value on hover */
+.records-table {
+  --table-min-width: 0;
+  min-width: 0;
+  table-layout: fixed;
+}
+.records-table th {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.records-table td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Cells clip their content, so focus rings sit inside the control. */
+.records-table td a:focus-visible,
+.records-table td button:focus-visible {
+  outline-offset: -2px;
+}
+.records-table .cell-action {
+  text-align: right;
+}
+.records-table td > button.quiet {
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--primary);
+}
+.records-table .row-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-lg);
+}
+.records-table .row-actions .text-button {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+.records-table .col-person,
+.records-table .col-role {
+  width: 26%;
+}
+.records-table .col-company {
+  width: 40%;
+}
+.records-table .col-capacity,
+.records-table .col-source {
+  width: 16%;
+}
+.records-table .col-date {
+  width: 19%;
+}
+.records-table .col-action {
+  width: 10%;
+}
+.person-companies-table .col-role {
+  width: 24%;
+}
+.person-companies-table .col-date {
+  width: 18%;
+}
+
+/* Company list */
+.companies-table th:nth-child(1) {
+  width: 28%;
+}
+.companies-table th:nth-child(2) {
+  width: 15%;
+}
+.companies-table th:nth-child(3) {
+  width: 12%;
+}
+.companies-table th:nth-child(4) {
+  width: 13%;
+}
+.companies-table th:nth-child(5) {
+  width: 14%;
+}
+.companies-table th:nth-child(6) {
+  width: 18%;
+}
+
+/* Company record: tabs, then a main column and the details panel */
+.record-tabs {
+  margin-bottom: 0;
+}
+.company-split {
+  padding-top: var(--space-section);
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 48px;
+}
+.company-split .detail-aside {
+  padding-left: 40px;
+}
+.record-panel .section + .section {
+  margin-top: 52px;
+  padding-top: 0;
+  border-top: 0;
+}
+.record-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+.record-toolbar-end {
+  justify-content: flex-end;
+}
+.record-toolbar-date {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.record-toolbar-date label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0;
+  font-size: var(--text-small);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.record-toolbar-date input {
+  width: 160px;
+  height: 35px;
+  min-height: 35px;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-weight: 400;
+}
+.record-toolbar-date .text-button {
+  min-height: 0;
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+.record-history .evidence-link {
+  display: inline-block;
+  margin-top: var(--space-xs);
+  font-size: var(--text-small);
+}
+
+/* Resolution settings */
+.dated-table th:nth-child(1) {
+  width: 26%;
+}
+.dated-table th:nth-child(2) {
+  width: 34%;
+}
+.dated-table th:nth-child(3) {
+  width: 18%;
+}
+.dated-table th:nth-child(4) {
+  width: 22%;
+}
+.records-table .dated-history td {
+  padding-left: 0;
+  white-space: normal;
+  color: var(--muted);
+  font-size: var(--text-small);
+  overflow-wrap: anywhere;
+}
+.dated-history .compact-list {
+  margin: 0;
+}
+.dated-status {
+  margin-top: var(--space-md);
+}
+
+/* Paired short fields in a drawer form */
+.field-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+}
+
+/* People: a list and the selected person side by side, each scrolling on its own */
+main#main:has(> .people-page) {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: none;
+  padding: 30px 0 0;
+}
+.people-page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.people-page > .page-header {
+  flex: none;
+  margin-bottom: var(--space-lg);
+  padding: 0 var(--space-page);
+}
+.people-layout {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 380px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  border-top: 1px solid var(--border);
+}
+.people-list-panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+}
+.toolbar.people-filters {
+  flex: none;
+  display: grid;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: var(--space-lg) var(--space-xl) var(--space-md) var(--space-page);
+}
+.people-filters .search {
+  max-width: none;
+}
+.people-filters select {
+  width: 100%;
+}
+.people-list-scroll,
+.person-panel {
+  position: relative;
+}
+.people-list-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 var(--space-sm) var(--space-lg) var(--space-xl);
+}
+.people-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.person-row {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 11px var(--space-md);
+  border: 0;
+  border-bottom: 1px solid var(--row-border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 400;
+  text-align: left;
+  white-space: normal;
+}
+.person-row:hover {
+  background: var(--row-hover);
+}
+.person-row[aria-current='true'] {
+  background: var(--selection);
+}
+.person-row:focus-visible {
+  outline-offset: -2px;
+}
+.person-row-name {
+  display: block;
+  color: var(--primary);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.person-row-summary {
+  display: block;
+  color: var(--muted);
+  font-size: var(--text-meta);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.person-panel {
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-section) var(--space-page) 48px;
+}
+.person-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-section);
+}
+.person-heading h2 {
+  margin: 0;
+  font-size: var(--text-record-title);
+}
+.person-status {
+  margin-top: var(--space-sm);
+}
+.person-facts {
+  margin-top: var(--space-lg);
+}
+.person-notes {
+  margin-top: var(--space-lg);
+}
+.person-panel .section,
+.person-panel .section + .section {
+  margin-top: 40px;
+  padding-top: 0;
+  border-top: 0;
+}
+.person-panel .section h3 {
+  margin: 0 0 6px;
+  font-size: var(--text-section);
+}
+.person-panel .person-resolutions > li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: 11px 0;
+}
+.person-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+.person-section-heading h3 {
+  margin: 0;
+}
+.person-panel > .disclosure {
+  margin-top: 40px;
+}
+
+/* One warning line (components/warning-line.tsx): outlined icon, text, optional section link at
+   the end; red icon only for a true blocker. `.field` sits under a form control. */
+.warning-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-md);
+  color: var(--ink);
+  font-weight: 400;
+}
+.warning-line.field {
+  margin: 4px 0 0;
+  font-size: var(--text-meta);
+}
+.warning-line > svg {
+  flex: none;
+  color: var(--warning-text);
+}
+.warning-line.blocking > svg {
+  color: var(--danger);
+}
+.warning-line > .warning-action {
+  margin-left: auto;
+}
+.person-particulars-table .col-particular {
+  width: 38%;
+}
+.person-particulars-table .col-date {
+  width: 18%;
+}
+.other-directorships-edit td input {
+  width: 100%;
+}
+.other-directorships-edit .col-company {
+  width: 46%;
+}
+.other-directorships-edit .col-action {
+  width: 14%;
+}

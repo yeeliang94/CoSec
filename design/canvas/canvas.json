@@ -1,0 +1,873 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-17T10:00:00Z"
+  },
+  "title": "CoSec Workspace Screens",
+  "launch": {
+    "view": "canvas"
+  },
+  "pages": [],
+  "designSystems": [],
+  "notes": {
+    "shell": {
+      "x": 0,
+      "y": -300,
+      "text": "Shared parts and system screens",
+      "kind": "title1",
+      "maxW": 9000
+    },
+    "res": {
+      "x": 0,
+      "y": 1000,
+      "text": "Resolutions",
+      "kind": "title1",
+      "maxW": 22800
+    },
+    "ar": {
+      "x": 0,
+      "y": 2300,
+      "text": "Annual returns",
+      "kind": "title1",
+      "maxW": 19760
+    },
+    "co": {
+      "x": 0,
+      "y": 3600,
+      "text": "Companies",
+      "kind": "title1",
+      "maxW": 47120
+    },
+    "pe": {
+      "x": 0,
+      "y": 4900,
+      "text": "People and Documents",
+      "kind": "title1",
+      "maxW": 13680
+    },
+    "tp": {
+      "x": 0,
+      "y": 6200,
+      "text": "Templates",
+      "kind": "title1",
+      "maxW": 22800
+    },
+    "st": {
+      "x": 0,
+      "y": 7500,
+      "text": "Settings and Audit log",
+      "kind": "title1",
+      "maxW": 4500
+    },
+    "howto": {
+      "x": 10200,
+      "y": -300,
+      "w": 420,
+      "text": "Sidebar, CompanyHeader, CompanyDetails and ResolutionPreview are shared parts. Edit them once and every screen that uses them updates. Popups are drawn over the page they open from.",
+      "fill": "blue"
+    }
+  },
+  "boards": {
+    "Sidebar.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 208,
+      "h": 900,
+      "title": "Navigation rail (shared)"
+    },
+    "CompanyHeader.dc.html": {
+      "x": 288,
+      "y": 0,
+      "w": 1176,
+      "h": 190,
+      "title": "Company header and tabs (shared)"
+    },
+    "CompanyDetails.dc.html": {
+      "x": 288,
+      "y": 270,
+      "w": 320,
+      "h": 420,
+      "title": "Company details panel (shared)"
+    },
+    "ResolutionPreview.dc.html": {
+      "x": 1544,
+      "y": 0,
+      "w": 960,
+      "h": 812,
+      "title": "Resolution preview (shared)"
+    },
+    "SignIn.dc.html": {
+      "x": 2584,
+      "y": 0,
+      "w": 1440,
+      "h": 900,
+      "title": "Sign in"
+    },
+    "PageError.dc.html": {
+      "x": 4104,
+      "y": 0,
+      "w": 1440,
+      "h": 900,
+      "title": "Page could not load"
+    },
+    "RecordUnavailable.dc.html": {
+      "x": 5624,
+      "y": 0,
+      "w": 1440,
+      "h": 900,
+      "title": "Record unavailable"
+    },
+    "ConfirmDiscard.dc.html": {
+      "x": 7144,
+      "y": 0,
+      "w": 1440,
+      "h": 900,
+      "title": "Discard unsaved changes"
+    },
+    "Main.dc.html": {
+      "x": 0,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Resolutions list",
+      "expand": "fill"
+    },
+    "ResolutionsEmpty.dc.html": {
+      "x": 1520,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Resolutions, empty tab",
+      "expand": "fill"
+    },
+    "NewResolution.dc.html": {
+      "x": 3040,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "New resolution drawer"
+    },
+    "ResolutionDetails.dc.html": {
+      "x": 4560,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Writing: Details"
+    },
+    "ResolutionWording.dc.html": {
+      "x": 6080,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Writing: Wording"
+    },
+    "ResolutionAnswers.dc.html": {
+      "x": 7600,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Writing: Answers"
+    },
+    "ResolutionSigners.dc.html": {
+      "x": 9120,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Writing: Signers"
+    },
+    "ResolutionFinish.dc.html": {
+      "x": 10640,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Writing: Finish"
+    },
+    "ResolutionReview.dc.html": {
+      "x": 12160,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Reviewer view"
+    },
+    "ResolutionHistory.dc.html": {
+      "x": 13680,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "History drawer"
+    },
+    "ConfirmComplete.dc.html": {
+      "x": 15200,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Mark complete confirm"
+    },
+    "AnnualReturns.dc.html": {
+      "x": 0,
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "title": "Annual returns list",
+      "expand": "fill"
+    },
+    "StartAnnualReturn.dc.html": {
+      "x": 1520,
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "title": "Start annual return drawer"
+    },
+    "AnnualReturnOfficers.dc.html": {
+      "x": 9120,
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "title": "Annual return: D Officers"
+    },
+    "AnnualReturnFix.dc.html": {
+      "x": 10640,
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "title": "Annual return: fix particulars drawer"
+    },
+    "AnnualReturnCheck.dc.html": {
+      "x": 16720,
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "title": "Annual return: Check and download"
+    },
+    "Companies.dc.html": {
+      "x": 0,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Companies list",
+      "expand": "fill"
+    },
+    "NewCompany.dc.html": {
+      "x": 1520,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "New company drawer"
+    },
+    "CompanyOverview.dc.html": {
+      "x": 3040,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: Overview",
+      "expand": "fill"
+    },
+    "CompanyOpeningReview.dc.html": {
+      "x": 4560,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: Review opening record",
+      "expand": "fill"
+    },
+    "CompanyEditDetails.dc.html": {
+      "x": 6080,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company particulars drawer"
+    },
+    "CompanyPeople.dc.html": {
+      "x": 7600,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: People",
+      "expand": "fill"
+    },
+    "CompanyAddPerson.dc.html": {
+      "x": 9120,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Add a person drawer"
+    },
+    "CompanyShares.dc.html": {
+      "x": 10640,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: Shares",
+      "expand": "fill"
+    },
+    "CompanyShareEntry.dc.html": {
+      "x": 12160,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Record allotment drawer"
+    },
+    "CompanyCharges.dc.html": {
+      "x": 13680,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: Charges",
+      "expand": "fill"
+    },
+    "CompanyAnnualReturns.dc.html": {
+      "x": 15200,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: Annual returns",
+      "expand": "fill"
+    },
+    "CompanyResolutions.dc.html": {
+      "x": 16720,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: Resolutions",
+      "expand": "fill"
+    },
+    "CompanyDocuments.dc.html": {
+      "x": 18240,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: Documents",
+      "expand": "fill"
+    },
+    "CompanySettings.dc.html": {
+      "x": 19760,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: Resolution settings",
+      "expand": "fill"
+    },
+    "CompanyHistory.dc.html": {
+      "x": 21280,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Company: History",
+      "expand": "fill"
+    },
+    "People.dc.html": {
+      "x": 0,
+      "y": 5200,
+      "w": 1440,
+      "h": 900,
+      "title": "People",
+      "expand": "fill"
+    },
+    "PersonParticulars.dc.html": {
+      "x": 1520,
+      "y": 5200,
+      "w": 1440,
+      "h": 900,
+      "title": "Edit particulars drawer"
+    },
+    "AddToCompany.dc.html": {
+      "x": 3040,
+      "y": 5200,
+      "w": 1440,
+      "h": 900,
+      "title": "Add to a company drawer"
+    },
+    "Documents.dc.html": {
+      "x": 4560,
+      "y": 5200,
+      "w": 1440,
+      "h": 900,
+      "title": "Documents",
+      "expand": "fill"
+    },
+    "DocumentsUpload.dc.html": {
+      "x": 6080,
+      "y": 5200,
+      "w": 1440,
+      "h": 900,
+      "title": "Documents: upload evidence",
+      "expand": "fill"
+    },
+    "Templates.dc.html": {
+      "x": 0,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Templates: Wording",
+      "expand": "fill"
+    },
+    "TemplatesMenu.dc.html": {
+      "x": 1520,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Templates: More actions menu"
+    },
+    "TemplatesLayouts.dc.html": {
+      "x": 3040,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Templates: Layouts",
+      "expand": "fill"
+    },
+    "TemplatesDocumentTypes.dc.html": {
+      "x": 4560,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Templates: Document types",
+      "expand": "fill"
+    },
+    "NewWording.dc.html": {
+      "x": 6080,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "New wording drawer"
+    },
+    "WordingEditor.dc.html": {
+      "x": 7600,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Wording editor"
+    },
+    "LayoutEditor.dc.html": {
+      "x": 9120,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Layout editor"
+    },
+    "Settings.dc.html": {
+      "x": 0,
+      "y": 7800,
+      "w": 1440,
+      "h": 900,
+      "title": "Settings",
+      "expand": "fill"
+    },
+    "SettingsUserForm.dc.html": {
+      "x": 1520,
+      "y": 7800,
+      "w": 1440,
+      "h": 900,
+      "title": "Settings: edit access"
+    },
+    "AuditLog.dc.html": {
+      "x": 3040,
+      "y": 7800,
+      "w": 1440,
+      "h": 900,
+      "title": "Audit log",
+      "expand": "fill"
+    },
+    "AnnualReturnHeader.dc.html": {
+      "x": 8664,
+      "y": 0,
+      "w": 1384,
+      "h": 112,
+      "title": "Annual return header (shared)"
+    },
+    "AnnualReturnSteps.dc.html": {
+      "x": 8664,
+      "y": 192,
+      "w": 220,
+      "h": 700,
+      "title": "Annual return step list (shared)"
+    },
+    "AnnualReturnFiling.dc.html": {
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "x": 3040,
+      "title": "Annual return: Filing information"
+    },
+    "AnnualReturnCompany.dc.html": {
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "x": 4560,
+      "title": "Annual return: A Company"
+    },
+    "AnnualReturnShareCapital.dc.html": {
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "x": 6080,
+      "title": "Annual return: B Share capital"
+    },
+    "AnnualReturnCharges.dc.html": {
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "x": 7600,
+      "title": "Annual return: C Charges"
+    },
+    "AnnualReturnMembers.dc.html": {
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "x": 12160,
+      "title": "Annual return: E Members"
+    },
+    "AnnualReturnAnalysis.dc.html": {
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "x": 13680,
+      "title": "Annual return: F Shareholding analysis"
+    },
+    "AnnualReturnCertificate.dc.html": {
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "x": 15200,
+      "title": "Annual return: G Certificate"
+    },
+    "AnnualReturnMemberFix.dc.html": {
+      "x": 18240,
+      "y": 2600,
+      "w": 1440,
+      "h": 900,
+      "title": "Annual return: member particulars drawer"
+    },
+    "SettingsNewUser.dc.html": {
+      "x": 4560,
+      "y": 7800,
+      "w": 1440,
+      "h": 900,
+      "title": "Settings: new staff account"
+    },
+    "CompanyBranches.dc.html": {
+      "x": 22800,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Branches drawer"
+    },
+    "CompanyShareClasses.dc.html": {
+      "x": 24320,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Share classes drawer"
+    },
+    "CompanyEndRelationship.dc.html": {
+      "x": 25840,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "End relationship drawer"
+    },
+    "CompanyChargeRecord.dc.html": {
+      "x": 27360,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Record charge drawer"
+    },
+    "CompanyChargeMenu.dc.html": {
+      "x": 28880,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Charge row menu"
+    },
+    "CompanyChargeDischarge.dc.html": {
+      "x": 30400,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Record discharge drawer"
+    },
+    "CompanyChangeCitation.dc.html": {
+      "x": 31920,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Change citation drawer"
+    },
+    "CompanyUploadDocument.dc.html": {
+      "x": 33440,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Upload document drawer"
+    },
+    "CompanyShareOpening.dc.html": {
+      "x": 34960,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Record opening balance drawer"
+    },
+    "CompanyShareTransfer.dc.html": {
+      "x": 36480,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Record transfer drawer"
+    },
+    "CompanyShareBuyBack.dc.html": {
+      "x": 38000,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Record buy-back drawer"
+    },
+    "CompanyShareMenu.dc.html": {
+      "x": 39520,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Share register row menu"
+    },
+    "CompanyShareCorrect.dc.html": {
+      "x": 41040,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "Correct entry drawer"
+    },
+    "ResolutionLayout.dc.html": {
+      "x": 16720,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Writing: document type and layout"
+    },
+    "ResolutionSignedCopy.dc.html": {
+      "x": 18240,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Finish: record signed copy"
+    },
+    "ResolutionReviewVersion.dc.html": {
+      "x": 19760,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Finish: review a version"
+    },
+    "ResolutionCancel.dc.html": {
+      "x": 21280,
+      "y": 1300,
+      "w": 1440,
+      "h": 900,
+      "title": "Finish: cancel resolution"
+    },
+    "PeopleNewPerson.dc.html": {
+      "x": 7600,
+      "y": 5200,
+      "w": 1440,
+      "h": 900,
+      "title": "New person drawer"
+    },
+    "PeopleCorrectDetails.dc.html": {
+      "x": 9120,
+      "y": 5200,
+      "w": 1440,
+      "h": 900,
+      "title": "Correct details drawer"
+    },
+    "PeopleCustomValue.dc.html": {
+      "x": 10640,
+      "y": 5200,
+      "w": 1440,
+      "h": 900,
+      "title": "Set a custom value drawer"
+    },
+    "PeopleOtherDirectorships.dc.html": {
+      "x": 12160,
+      "y": 5200,
+      "w": 1440,
+      "h": 900,
+      "title": "Other directorships drawer"
+    },
+    "TemplatesNewLayout.dc.html": {
+      "x": 10640,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "New layout drawer"
+    },
+    "TemplatesNewDocumentType.dc.html": {
+      "x": 12160,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "New document type drawer"
+    },
+    "WordingNewField.dc.html": {
+      "x": 13680,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Wording editor: new field"
+    },
+    "WordingFieldEditor.dc.html": {
+      "x": 15200,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Wording editor: field settings"
+    },
+    "WordingCondition.dc.html": {
+      "x": 16720,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Wording editor: condition"
+    },
+    "WordingReview.dc.html": {
+      "x": 18240,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Wording editor: reviewer view"
+    },
+    "WordingPublish.dc.html": {
+      "x": 19760,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Wording editor: publish confirmation"
+    },
+    "WordingReturn.dc.html": {
+      "x": 21280,
+      "y": 6500,
+      "w": 1440,
+      "h": 900,
+      "title": "Wording editor: return for changes"
+    },
+    "NewCompanyBusiness.dc.html": {
+      "x": 42560,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "New company: business details"
+    },
+    "NewCompanyPeople.dc.html": {
+      "x": 44080,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "New company: people"
+    },
+    "NewCompanyReview.dc.html": {
+      "x": 45600,
+      "y": 3900,
+      "w": 1440,
+      "h": 900,
+      "title": "New company: review"
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Sidebar.dc.html",
+    "CompanyHeader.dc.html",
+    "CompanyDetails.dc.html",
+    "ResolutionPreview.dc.html",
+    "SignIn.dc.html",
+    "PageError.dc.html",
+    "RecordUnavailable.dc.html",
+    "ConfirmDiscard.dc.html",
+    "ResolutionsEmpty.dc.html",
+    "NewResolution.dc.html",
+    "ResolutionDetails.dc.html",
+    "ResolutionWording.dc.html",
+    "ResolutionAnswers.dc.html",
+    "ResolutionSigners.dc.html",
+    "ResolutionFinish.dc.html",
+    "ResolutionReview.dc.html",
+    "ResolutionHistory.dc.html",
+    "ConfirmComplete.dc.html",
+    "ResolutionLayout.dc.html",
+    "ResolutionSignedCopy.dc.html",
+    "ResolutionReviewVersion.dc.html",
+    "ResolutionCancel.dc.html",
+    "AnnualReturnHeader.dc.html",
+    "AnnualReturnSteps.dc.html",
+    "AnnualReturns.dc.html",
+    "StartAnnualReturn.dc.html",
+    "AnnualReturnFiling.dc.html",
+    "AnnualReturnCompany.dc.html",
+    "AnnualReturnShareCapital.dc.html",
+    "AnnualReturnCharges.dc.html",
+    "AnnualReturnOfficers.dc.html",
+    "AnnualReturnFix.dc.html",
+    "AnnualReturnMembers.dc.html",
+    "AnnualReturnAnalysis.dc.html",
+    "AnnualReturnCertificate.dc.html",
+    "AnnualReturnCheck.dc.html",
+    "AnnualReturnMemberFix.dc.html",
+    "Companies.dc.html",
+    "NewCompany.dc.html",
+    "NewCompanyBusiness.dc.html",
+    "NewCompanyPeople.dc.html",
+    "NewCompanyReview.dc.html",
+    "CompanyOverview.dc.html",
+    "CompanyOpeningReview.dc.html",
+    "CompanyEditDetails.dc.html",
+    "CompanyPeople.dc.html",
+    "CompanyAddPerson.dc.html",
+    "CompanyShares.dc.html",
+    "CompanyShareEntry.dc.html",
+    "CompanyCharges.dc.html",
+    "CompanyAnnualReturns.dc.html",
+    "CompanyResolutions.dc.html",
+    "CompanyDocuments.dc.html",
+    "CompanySettings.dc.html",
+    "CompanyHistory.dc.html",
+    "CompanyBranches.dc.html",
+    "CompanyShareClasses.dc.html",
+    "CompanyEndRelationship.dc.html",
+    "CompanyChargeRecord.dc.html",
+    "CompanyChargeMenu.dc.html",
+    "CompanyChargeDischarge.dc.html",
+    "CompanyChangeCitation.dc.html",
+    "CompanyUploadDocument.dc.html",
+    "CompanyShareOpening.dc.html",
+    "CompanyShareTransfer.dc.html",
+    "CompanyShareBuyBack.dc.html",
+    "CompanyShareMenu.dc.html",
+    "CompanyShareCorrect.dc.html",
+    "People.dc.html",
+    "PersonParticulars.dc.html",
+    "AddToCompany.dc.html",
+    "Documents.dc.html",
+    "DocumentsUpload.dc.html",
+    "PeopleNewPerson.dc.html",
+    "PeopleCorrectDetails.dc.html",
+    "PeopleCustomValue.dc.html",
+    "PeopleOtherDirectorships.dc.html",
+    "Templates.dc.html",
+    "TemplatesMenu.dc.html",
+    "TemplatesLayouts.dc.html",
+    "TemplatesDocumentTypes.dc.html",
+    "NewWording.dc.html",
+    "WordingEditor.dc.html",
+    "LayoutEditor.dc.html",
+    "TemplatesNewLayout.dc.html",
+    "TemplatesNewDocumentType.dc.html",
+    "WordingNewField.dc.html",
+    "WordingFieldEditor.dc.html",
+    "WordingCondition.dc.html",
+    "WordingReview.dc.html",
+    "WordingPublish.dc.html",
+    "WordingReturn.dc.html",
+    "Settings.dc.html",
+    "SettingsUserForm.dc.html",
+    "AuditLog.dc.html",
+    "SettingsNewUser.dc.html"
+  ]
+}
