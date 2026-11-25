@@ -1,6 +1,6 @@
 # CoSec Workspace
 
-A company secretarial app for Malaysian private companies. It keeps company records, directors, members and their dated roles, prepares resolutions and director forms as Word documents, and fills the SSM MBRS AR1 annual return workbook.
+A company secretarial app for Malaysian private companies. It keeps company records, directors, members and their dated roles, prepares resolutions and director forms as Word documents, fills the SSM MBRS AR1 annual return workbook, and imports records from client files with AI help that a person reviews.
 
 Built with Next.js, TypeScript and SQLite. It runs on one computer with no database server. All sample data is fictional, and no sample wording is approved legal precedent.
 
@@ -10,6 +10,7 @@ Built with Next.js, TypeScript and SQLite. It runs on one computer with no datab
 - **Resolutions:** reusable clauses and layouts, guided questions, optional colleague review, and Word (.docx) output with a kept history.
 - **Director forms:** appointment and resignation documents generated from the company record.
 - **AR1 annual return:** fills a blank AR1 workbook made in SSM's MBRS Preparation Tool (mTool) from the company record, ready to check and lodge.
+- **Bulk import:** reads a client's files with an AI model, suggests company, people, share and charge records with their sources, and lets a reviewer correct and accept each one before it is applied. It needs an OpenAI-compatible model gateway, set on the Settings page, with its key in `.env` as `OPENAI_API_KEY`.
 - **Access control:** Admin and User roles, company-level access and masking of identity numbers for users without access to them.
 
 ## Getting started
