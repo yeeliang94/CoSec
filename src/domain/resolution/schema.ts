@@ -10,7 +10,7 @@ import type {
 } from './model';
 import { RECORD_PROPERTIES } from './model';
 
-/** Contract limits (docs/RESOLUTION_CONTRACTS.md). */
+/** Contract limits. */
 export const LIMITS = {
   nodes: 2000,
   depth: 12,

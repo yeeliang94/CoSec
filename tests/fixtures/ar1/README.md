@@ -1,6 +1,6 @@
 # AR1 test workbooks (fictional)
 
-Copied on 16 November 2026 from the owner's local `Data/` folder, where they were made with SSM mTool v2.2 for the fictional company Test Sdn Bhd (012345678910). No real client data.
+Made with SSM mTool v2.2 for the fictional company Test Sdn Bhd (012345678910). No real client data.
 
 | File | Source | What it is |
 | --- | --- | --- |

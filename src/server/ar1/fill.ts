@@ -97,7 +97,7 @@ const SECTION_B_ROWS = {
   forfeited: 27, // ssmt_NumberOfSharesForfeited
   treasury: 28, // ssmt_NumberOfSharesHeldAsTreasuryShares
   fullyPaid: 40, // ssmt_AmountOfSharesIssuedAsFullyPaid
-  partlyPaid: 41, // ssmt_AmountOfSharesIssuedAsPartlyUnpaid (see docs/ANNUAL_RETURN_BUILD.md §4)
+  partlyPaid: 41, // ssmt_AmountOfSharesIssuedAsPartlyUnpaid
   calledUp: 44, // ssmt_AmountOfSharesCalledUp
   callsReceived: 45, // ssmt_AmountOfCallsReceivedIncludingPaymentsOnApplicationAndAllotment
   consideredPaidFullyPaid: 46, // ssmt_AmountAgreedToBeConsideredAsPaidOn…IssuedAsFullyPaidUpOtherwiseThanInCash
@@ -137,8 +137,8 @@ const number = (n: string): CellValue => ({ kind: 'number', number: n });
 export class FillError extends Error {}
 
 /**
- * Writes an `Ar1Data` into a blank mTool AR1 workbook. Cell positions follow
- * docs/research/mbrs-ar1-excel-filling.md, read from mTool v2.2's AR1 template (SSMxT_2022v1.0).
+ * Writes an `Ar1Data` into a blank mTool AR1 workbook. Cell positions are
+ * read from mTool v2.2's AR1 template (SSMxT_2022v1.0).
  * Rows are added first; every later position is worked out from the rows added above it. Values
  * are collected per sheet and written in one pass over each sheet at the end.
  */

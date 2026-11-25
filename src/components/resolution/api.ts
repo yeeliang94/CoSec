@@ -1,4 +1,4 @@
-/** Client helpers and response shapes for the resolution builder APIs (docs/RESOLUTION_CONTRACTS.md). */
+/** Client helpers and response shapes for the resolution builder APIs. */
 import type {
   AssemblyVersion,
   ClauseTemplate,

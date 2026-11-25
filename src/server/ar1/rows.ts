@@ -34,7 +34,7 @@ export type RowsRequest = {
   /**
    * The blank's member row has no id (Section C's second table), so rows are copied without one
    * and the caller writes each row's No. in column D. Rows added this way passed mTool's
-   * Validate on 17 November 2026 (see docs/research/mbrs-ar1-excel-filling.md).
+   * Validate on 17 November 2026.
    */
   idless?: boolean;
 };
