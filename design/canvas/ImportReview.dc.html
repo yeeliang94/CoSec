@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Meranti Trading Sdn. Bhd. – Import review</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#284b5c;text-decoration:none}a:hover{color:#1e3b4b;text-decoration:underline}
+th{font-size:12px;font-weight:400;color:#65707a;text-align:left;padding:0 10px 8px 0;border-bottom:1px solid #e0e3e6}
+td{padding:11px 10px 11px 0;border-bottom:1px solid #e7eaed;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+tr.on td{background:#f0f4f6}
+.src{font-size:13px}
+.ck{width:28px}
+.nav{display:inline-flex;align-items:center;height:36px;padding:0 14px;box-sizing:border-box;border:1px solid #cbd1d6;border-radius:4px;color:#252b32;text-decoration:none}
+.same{color:#606972}
+</style>
+</helmet>
+<div style="display: flex; width: 1440px; height: 900px; overflow: hidden; background: #ffffff; color: #252b32; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45">
+<dc-import name="Sidebar" current="companies" collapsed="{{yes}}" hint-size="56px,900px"></dc-import>
+<main style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<dc-import name="ImportReviewHeader" hint-size="100%,112px"></dc-import>
+<div style="flex: 1 1 0; min-height: 0; display: flex">
+<dc-import name="ImportReviewSteps" step="company" hint-size="200px,788px"></dc-import>
+<section style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column">
+<div style="flex: 1 1 0; overflow: auto; padding: 24px 32px; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h2 style="margin: 0; font-size: 17px; font-weight: 600">Company details</h2>
+<label style="display: flex; align-items: center; gap: 8px; font-size: 13px"><input type="checkbox">Show only changes</label>
+</div>
+<table style="width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: -24px">
+<colgroup><col class="ck"><col style="width: 22%"><col style="width: 22%"><col style="width: 26%"><col></colgroup>
+<thead><tr><th><input type="checkbox" checked aria-label="Use all"></th><th>Field</th><th>In the app</th><th>Suggested</th><th style="padding-right: 0">Source</th></tr></thead>
+<tbody>
+<tr><td><input type="checkbox" checked aria-label="Use"></td><td>Company name</td><td>Meranti Trading Sdn. Bhd.</td><td class="same">Same</td><td class="src" style="padding-right: 0"><a href="#">Meranti_Form9.pdf, p. 1</a></td></tr>
+<tr><td><input type="checkbox" checked aria-label="Use"></td><td>Incorporation date</td><td>14 Feb 2020</td><td class="same">Same</td><td class="src" style="padding-right: 0"><a href="#">Meranti_Form9.pdf, p. 1</a></td></tr>
+<tr><td><input type="checkbox" checked aria-label="Use"></td><td>Company type</td><td></td><td>Private limited by shares</td><td class="src" style="padding-right: 0"><a href="#">AR 2024 Meranti.pdf, p. 1</a></td></tr>
+<tr><td><input type="checkbox" checked aria-label="Use"></td><td>Status</td><td></td><td>Existing</td><td class="src" style="padding-right: 0"><a href="#">AR 2024 Meranti.pdf, p. 1</a></td></tr>
+<tr class="on"><td><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5f4c24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Not changed by import"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg></td><td>Financial year end</td><td>31 Dec</td><td>30 Jun</td><td class="src" style="padding-right: 0"><a href="#">AR 2024 Meranti.pdf, p. 2</a></td></tr>
+<tr><td><input type="checkbox" checked aria-label="Use"></td><td>Former name</td><td></td><td>Meranti Timber Sdn. Bhd.</td><td class="src" style="padding-right: 0"><a href="#">Form 13 name change.pdf, p. 1</a></td></tr>
+<tr><td><input type="checkbox" checked aria-label="Use"></td><td>Phone</td><td></td><td>03-2100 0000</td><td class="src" style="padding-right: 0"><a href="#">AR 2024 Meranti.pdf, p. 2</a></td></tr>
+<tr><td><input type="checkbox" checked aria-label="Use"></td><td>Email</td><td></td><td>admin@meranti.example</td><td class="src" style="padding-right: 0"><a href="#">Letterhead in Scan_0042.pdf</a></td></tr>
+<tr><td><input type="checkbox" aria-label="Use"></td><td>Website</td><td></td><td>meranti.example</td><td class="src" style="padding-right: 0"><a href="#">Letterhead in Scan_0042.pdf</a></td></tr>
+<tr><td><input type="checkbox" checked aria-label="Use"></td><td>Nature of business</td><td></td><td>Wholesale of timber products</td><td class="src" style="padding-right: 0"><a href="#">AR 2024 Meranti.pdf, p. 3</a></td></tr>
+</tbody>
+</table>
+<p style="margin: -28px 0 0; display: flex; align-items: center; gap: 8px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5f4c24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg>The financial year end differs from the app. An import does not change it; check it on the company page.</p>
+<section>
+<h3 style="margin: 0 0 8px; font-size: 15px; font-weight: 600">Not found in the files</h3>
+<table style="width: 100%; border-collapse: collapse; table-layout: fixed">
+<colgroup><col class="ck"><col style="width: 22%"><col></colgroup>
+<tbody>
+<tr><td></td><td>GST number</td><td class="same" style="padding-right: 0">No file mentions it</td></tr>
+<tr><td></td><td>Fax</td><td class="same" style="padding-right: 0">No file mentions it</td></tr>
+</tbody>
+</table>
+</section>
+</div>
+<footer style="display: flex; justify-content: space-between; padding: 14px 32px; border-top: 1px solid #e0e3e6">
+<a href="ImportReviewQuestions.dc.html" class="nav">Back</a>
+<a href="ImportReviewAddresses.dc.html" class="nav">Continue</a>
+</footer>
+</section>
+<dc-import name="ImportSource" doc="ar2024" hint-size="480px,788px"></dc-import>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+import { defaultImportSettings, type ImportSettings } from './imports';
 export type Capability =
   | 'prepare_job'
   | 'review_pack'
@@ -125,6 +126,8 @@ export type Settings = {
   firmPhone?: string;
   firmEmail?: string;
   selfApproval: false;
+  /** Bulk import gateway and limits; absent on settings saved before bulk import. */
+  importSettings?: ImportSettings;
 };
 export type Workspace = {
   actor: Actor;
@@ -147,4 +150,5 @@ export const defaultSettings: Settings = {
   firmPhone: '',
   firmEmail: '',
   selfApproval: false,
+  importSettings: defaultImportSettings,
 };

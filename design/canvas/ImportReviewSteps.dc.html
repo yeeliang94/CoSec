@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Import review sections</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.st a{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:3px;color:#252b32;text-decoration:none;font-size:13px}
+.st a:hover{background:#f0f4f6}
+</style>
+</helmet>
+<nav class="st" aria-label="Import sections" style="width: 200px; height: 100%; min-height: 700px; box-sizing: border-box; padding: 20px 14px; border-right: 1px solid #e0e3e6; background: #ffffff; display: flex; flex-direction: column; gap: 2px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.45">
+<a href="ImportReviewQuestions.dc.html" style="{{s.questions}}">Questions<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="{{ic.questions}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Needs your answer"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg></a>
+<a href="ImportReview.dc.html" style="{{s.company}}">Company details</a>
+<a href="ImportReviewAddresses.dc.html" style="{{s.addresses}}">Addresses<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="{{ic.addresses}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Needs your answer"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg></a>
+<a href="ImportReviewBusiness.dc.html" style="{{s.business}}">Business activity</a>
+<a href="ImportReviewPeople.dc.html" style="{{s.people}}">People and roles<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="{{ic.people}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Needs your answer"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg></a>
+<a href="ImportReviewShares.dc.html" style="{{s.shares}}">Shares</a>
+<a href="ImportReviewCharges.dc.html" style="{{s.charges}}">Charges</a>
+<a href="ImportReviewFiles.dc.html" style="{{s.files}}">Files used</a>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"step":{"editor":"enum","options":["questions","company","addresses","business","people","shares","charges","files"],"default":"company"},"$preview":{"width":200,"height":700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const cur = this.props.step ?? 'company';
+    const keys = ['questions', 'company', 'addresses', 'business', 'people', 'shares', 'charges', 'files'];
+    const s = {};
+    const ic = {};
+    keys.forEach((k) => {
+      s[k] = k === cur ? 'background: #284b5c; color: #ffffff;' : 'color: #252b32;';
+      ic[k] = k === cur ? '#ffffff' : '#5f4c24';
+    });
+    return { s, ic };
+  }
+}
+</script>
+</body>
+</html>

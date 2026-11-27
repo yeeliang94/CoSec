@@ -5,6 +5,7 @@ import type { Capability, Company, Preferences } from '@/domain/model';
 import { ROLE_LABELS, roleOf } from '@/domain/model';
 import { useWorkspace, PageHeader, request } from '@/components/workspace';
 import { ActionForm } from '@/components/forms';
+import { defaultImportSettings } from '@/domain/imports';
 function Personal() {
   const { data, refresh } = useWorkspace();
   const [status, setStatus] = useState('');
@@ -326,6 +327,86 @@ function Users() {
     </section>
   );
 }
+/** The model gateway and limits for bulk import. The key stays in .env. */
+function BulkImportSettings() {
+  const { data } = useWorkspace();
+  const [checking, setChecking] = useState(false);
+  const [result, setResult] = useState<{ ok: boolean; text: string } | null>(null);
+  if (!data) return null;
+  const values = { ...defaultImportSettings, ...(data.settings.importSettings ?? {}) };
+  return (
+    <section id="bulk-import">
+      <h2>Bulk import</h2>
+      <ActionForm
+        url="/api/settings"
+        action="import"
+        label="Save bulk import settings"
+        extra={{ expectedRevision: data.settings.revision }}
+        fields={[
+          { name: 'gatewayUrl', label: 'Gateway address', value: values.gatewayUrl, full: true },
+          { name: 'model', label: 'Model name', value: values.model },
+          { name: 'providerHeader', label: 'Provider header', value: values.providerHeader },
+          {
+            name: 'companiesAtOnce',
+            label: 'Companies read at a time',
+            type: 'number',
+            value: String(values.companiesAtOnce),
+          },
+          {
+            name: 'maxTurns',
+            label: 'Turns per company',
+            type: 'number',
+            value: String(values.maxTurns),
+          },
+          {
+            name: 'maxMinutes',
+            label: 'Minutes per company',
+            type: 'number',
+            value: String(values.maxMinutes),
+          },
+          {
+            name: 'maxTokensPerCompany',
+            label: 'Tokens per company',
+            type: 'number',
+            value: String(values.maxTokensPerCompany),
+          },
+          {
+            name: 'dailyTokenLimit',
+            label: 'Tokens per day',
+            type: 'number',
+            value: String(values.dailyTokenLimit),
+          },
+        ]}
+      />
+      <div className="actions">
+        <button
+          type="button"
+          disabled={checking || !values.gatewayUrl}
+          onClick={async () => {
+            setChecking(true);
+            setResult(null);
+            try {
+              const reply = await request<{ seconds: number }>('/api/imports/check', {});
+              setResult({ ok: true, text: `The gateway answered in ${reply.seconds} seconds.` });
+            } catch (e) {
+              setResult({ ok: false, text: e instanceof Error ? e.message : 'The check failed.' });
+            } finally {
+              setChecking(false);
+            }
+          }}
+        >
+          {checking ? 'Checking…' : 'Check connection'}
+        </button>
+        {result ? (
+          <span role="status" className={result.ok ? 'metadata' : 'feedback error'}>
+            {result.text}
+          </span>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
 export default function Settings() {
   const { data } = useWorkspace();
   if (!data) return null;
@@ -391,6 +472,7 @@ export default function Settings() {
             </dl>
           </section>
         ) : null}
+        {firm ? <BulkImportSettings /> : null}
       </div>
     </>
   );

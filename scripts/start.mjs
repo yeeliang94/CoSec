@@ -15,9 +15,17 @@ process.chdir(join(dirname(fileURLToPath(import.meta.url)), '..'));
 // Browser storage belongs in the browser. Some Node versions expose a server-side
 // localStorage getter that warns (or throws) when dependencies probe it without a file.
 // Apply to setup, build, web and worker children without suppressing other warnings.
-process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, '--no-experimental-webstorage']
+// Bulk import calls the firm's model gateway: trust the operating system's certificates (the
+// Windows store on the office PC) and send requests through HTTPS_PROXY when one is set.
+process.env.NODE_OPTIONS = [
+  process.env.NODE_OPTIONS,
+  '--no-experimental-webstorage',
+  '--use-system-ca',
+]
   .filter(Boolean)
   .join(' ');
+if (process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY)
+  process.env.NODE_USE_ENV_PROXY = '1';
 
 function step(message) {
   console.log(`\n== ${message}`);

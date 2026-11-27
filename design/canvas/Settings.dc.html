@@ -59,6 +59,25 @@ select{-webkit-appearance:none;appearance:none;padding-right:34px !important;bac
 <button type="button" class="sec" style="align-self: flex-start">Save firm details</button>
 <div><div style="font-size: 12px; color: #606972">Approval policy</div><div>Independent review</div></div>
 </section>
+<section style="max-width: 640px; display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 600">Bulk import</h2>
+<div><label for="gu">Gateway address</label><input type="text" id="gu" value="https://ai-gateway.example.internal/v1"></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div><label for="gm">Model name</label><input type="text" id="gm" value="gpt-4.1-eu"></div>
+<div><label for="gh">Provider header</label><input type="text" id="gh" value="azure"></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div><label for="gc">Companies read at a time</label><input type="text" id="gc" value="4"></div>
+<div><label for="gt">Turns per company</label><input type="text" id="gt" value="60"></div>
+<div><label for="gn">Minutes per company</label><input type="text" id="gn" value="30"></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div><label for="gk">Tokens per company</label><input type="text" id="gk" value="3000000"></div>
+<div><label for="gd">Tokens per day</label><input type="text" id="gd" value="50000000"></div>
+</div>
+<button type="button" class="sec" style="align-self: flex-start">Save bulk import settings</button>
+<div style="display: flex; align-items: center; gap: 12px"><button type="button" class="sec">Check connection</button><span style="color: #606972">The gateway answered in 1.5 seconds.</span></div>
+</section>
 </main>
 </div>
 </x-dc>
