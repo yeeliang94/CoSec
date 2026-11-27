@@ -317,6 +317,7 @@ function Review() {
             importId={id}
             source={source}
             file={source ? files.get(source.fileId) : undefined}
+            canSeeIdentity={data.actor.capabilities.includes('view_identity')}
           />
         </div>
       ) : null}
@@ -1028,10 +1029,13 @@ function SourcePanel({
   importId,
   source,
   file,
+  canSeeIdentity,
 }: {
   importId: string;
   source: Source | null;
   file?: CompanyDetail['row']['files'][number];
+  /** Without it the original file stays closed: only the page text, masked, is shown. */
+  canSeeIdentity: boolean;
 }) {
   const [page, setPage] = useState<PageText | null>(null);
   const [error, setError] = useState('');
@@ -1072,6 +1076,8 @@ function SourcePanel({
               <p className="feedback error">{error}</p>
             ) : !page ? (
               <p className="import-source-empty">Opening the page…</p>
+            ) : page.visual && !canSeeIdentity ? (
+              <WarningLine>This scan needs permission to view identity details.</WarningLine>
             ) : page.visual && file.kind === 'image' ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={fileUrl} alt={`${file.name}`} />

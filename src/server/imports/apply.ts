@@ -11,6 +11,7 @@ import { assertPersonVisible } from '../records/scope';
 import { assertCapability, DomainError, today } from '../../domain/access';
 import type { Actor, Company, Document } from '../../domain/model';
 import {
+  byReviewer,
   openQuestions,
   type ImportCompany,
   type ImportFile,
@@ -175,32 +176,39 @@ export async function applyImportCompany(
     string,
     { file: ImportFile; doc: Document | null; key: string | null; bytes: Buffer | null }
   >();
-  for (const id of new Set(used.map((sug) => sug.source.fileId))) {
-    const file = row.files.find((f) => f.id === id);
-    // A value entered by the reviewer has no file; any other value needs its file here.
-    if (!file) {
-      if (id)
-        throw new DomainError(
-          'A ticked value comes from a file this company no longer has. Run this company again.',
-        );
-      continue;
-    }
-    const ext = file.name.split('.').pop()!.toLowerCase();
-    if (!DOC_TYPES[ext] || !file.storageKey) {
-      files.set(id, { file, doc: null, key: null, bytes: null });
-      continue;
-    }
-    const bytes = await readImportBytes(importId, file);
-    const key = `${uuid()}.${ext === 'csv' ? 'txt' : ext}`;
-    const destination = safeStoragePath(key);
-    await mkdir(path.dirname(destination), { recursive: true, mode: 0o700 });
-    await writeFile(destination, bytes, { flag: 'wx', mode: 0o600 });
-    files.set(id, { file, doc: null, key, bytes });
-  }
   const cleanup = async () => {
     for (const f of files.values())
       if (f.key) await unlink(safeStoragePath(f.key)).catch(() => undefined);
   };
+  // A copy that fails part-way removes the copies already made, so a retry leaves no orphans.
+  try {
+    for (const id of new Set(used.map((sug) => sug.source.fileId))) {
+      const file = row.files.find((f) => f.id === id);
+      // A value entered by the reviewer has no file; any other value needs its file here.
+      if (!file) {
+        if (id)
+          throw new DomainError(
+            'A ticked value comes from a file this company no longer has. Run this company again.',
+          );
+        continue;
+      }
+      const ext = file.name.split('.').pop()!.toLowerCase();
+      if (!DOC_TYPES[ext] || !file.storageKey) {
+        files.set(id, { file, doc: null, key: null, bytes: null });
+        continue;
+      }
+      const bytes = await readImportBytes(importId, file);
+      const key = `${uuid()}.${ext === 'csv' ? 'txt' : ext}`;
+      const destination = safeStoragePath(key);
+      await mkdir(path.dirname(destination), { recursive: true, mode: 0o700 });
+      // Recorded before the write, so a half-written copy is removed too.
+      files.set(id, { file, doc: null, key, bytes });
+      await writeFile(destination, bytes, { flag: 'wx', mode: 0o600 });
+    }
+  } catch (error) {
+    await cleanup();
+    throw error;
+  }
 
   const notes: string[] = [];
   let applied: ImportCompany;
@@ -369,6 +377,33 @@ export async function applyImportCompany(
             }),
           );
           personId = person.id;
+        } else if (byReviewer(sug)) {
+          // A name the reviewer typed or corrected, for someone already in the app, is a rename;
+          // a name only the files give is not, since files often shorten or misspell names.
+          const agentName = sug.original?.fullName;
+          const reviewerName =
+            !sug.source.fileId || (agentName !== undefined && agentName !== sug.fullName);
+          const [p] = await tx.select().from(s.people).where(eq(s.people.id, personId));
+          if (reviewerName && p.data.fullName !== sug.fullName)
+            await sourced(sug, () =>
+              changePerson(me, {
+                action: 'update',
+                id: personId!,
+                expectedRevision: p.revision,
+                requestId: uuid(),
+                fullName: sug.fullName,
+                reason: 'Bulk import',
+              }),
+            ).catch((e) => {
+              if (ok(e)) return;
+              if (e instanceof DomainError && e.code === 'FORBIDDEN') {
+                notes.push(
+                  `${p.data.fullName}'s name was kept as it is: they are shared with a company you cannot open.`,
+                );
+                return;
+              }
+              throw e;
+            });
         }
         entry.personId = personId;
         if (Object.keys(sug.values).length) {

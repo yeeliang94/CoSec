@@ -49,6 +49,8 @@ export type ImportFile = {
   otherCompany?: string;
   /** Set when a person moved the file here from another company folder. */
   movedFrom?: string;
+  /** Set when the reviewer left the file out: the agent never lists, reads or cites it again. */
+  leftOut?: boolean;
 };
 
 /** Where a value came from. `fileId` is empty for a value the reviewer typed in. */

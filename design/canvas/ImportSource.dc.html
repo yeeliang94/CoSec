@@ -23,7 +23,8 @@ select{-webkit-appearance:none;appearance:none;padding-right:34px !important;bac
 <button type="button" class="ib" aria-label="Next page"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
 </div>
 <div style="flex: 1 1 0; overflow: auto; padding: 24px">
-<div style="position: relative; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); padding: 36px 34px; min-height: 600px; box-sizing: border-box">
+<p style="{{warn}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5f4c24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"></path></svg>This scan needs permission to view identity details.</p>
+<div style="{{sheet}} position: relative; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); padding: 36px 34px; min-height: 600px; box-sizing: border-box">
 <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.3px; color: #606972; margin-bottom: 18px">{{d.heading}}</div>
 <div class="ln" style="width: 78%"></div><div class="ln" style="width: 64%"></div><div class="ln" style="width: 70%; margin-bottom: 26px"></div>
 <div class="ln" style="width: 40%"></div>
@@ -35,16 +36,23 @@ select{-webkit-appearance:none;appearance:none;padding-right:34px !important;bac
 </div>
 </aside>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"doc":{"editor":"enum","options":["ar2024","scan42","register","form24"],"default":"ar2024"},"$preview":{"width":480,"height":788}}'>
+<script type="text/x-dc" data-dc-script data-props='{"doc":{"editor":"enum","options":["ar2024","scan42","register","form24","scanHidden"],"default":"ar2024"},"$preview":{"width":480,"height":788}}'>
 class Component extends DCLogic {
   renderVals() {
     const docs = {
       ar2024: { file: 'AR 2024 Meranti.pdf', page: 'Page 2 of 9', heading: 'ANNUAL RETURN OF A COMPANY HAVING A SHARE CAPITAL', value: 'Registered address: 13 Jalan Contoh, 50450 Kuala Lumpur' },
       scan42: { file: 'Scan_0042.pdf', page: 'Page 1 of 2', heading: 'NOTIFICATION OF CHANGE IN THE REGISTER OF DIRECTORS', value: 'Tan Mei Ling, 750101-14-5678, appointed 2 May 2019' },
       register: { file: 'Meranti members 2025.xlsx', page: 'Sheet Members, row 4', heading: 'REGISTER OF MEMBERS', value: 'Lim Wei Jie, 900203-10-1234, Ordinary, 60,000' },
-      form24: { file: 'Form 24 (2).pdf', page: 'Page 1 of 1', heading: 'RETURN OF ALLOTMENT OF SHARES', value: '40,000 ordinary shares allotted 9 Jan 2023' }
+      form24: { file: 'Form 24 (2).pdf', page: 'Page 1 of 1', heading: 'RETURN OF ALLOTMENT OF SHARES', value: '40,000 ordinary shares allotted 9 Jan 2023' },
+      // Staff without permission to view identity details: a scanned page stays closed.
+      scanHidden: { file: 'Scan_0042.pdf', page: 'Page 1 of 2', heading: '', value: '', hidden: true }
     };
-    return { d: docs[this.props.doc ?? 'ar2024'] ?? docs.ar2024 };
+    const d = docs[this.props.doc ?? 'ar2024'] ?? docs.ar2024;
+    return {
+      d,
+      warn: d.hidden ? 'display: flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; color: #252b32' : 'display: none',
+      sheet: d.hidden ? 'display: none;' : ''
+    };
   }
 }
 </script>

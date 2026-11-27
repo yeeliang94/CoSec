@@ -273,7 +273,7 @@ async function open(ctx: Context, file: ImportFile) {
 
 function fileOf(ctx: Context, id: unknown) {
   const file = ctx.row.files.find((f) => f.id === id);
-  if (!file) throw new ToolProblem('That file id is not in this company folder.');
+  if (!file || file.leftOut) throw new ToolProblem('That file id is not in this company folder.');
   if (file.result === 'Could not read')
     throw new ToolProblem(`That file could not be read: ${file.note}.`);
   return file;
@@ -646,7 +646,9 @@ export function appChecks(row: ImportCompany, existing: boolean, terms: KnownTer
         `A new company needs ${missing.join(', ')}. Look again; if the files do not say, list them in finish.`,
       );
   }
-  const unclassified = row.files.filter((f) => row.run.read.includes(f.id) && !f.readAs);
+  const unclassified = row.files.filter(
+    (f) => !f.leftOut && row.run.read.includes(f.id) && !f.readAs,
+  );
   if (unclassified.length)
     problems.push(`Classify the files you opened: ${unclassified.map((f) => f.id).join(', ')}.`);
   return problems;
@@ -654,6 +656,7 @@ export function appChecks(row: ImportCompany, existing: boolean, terms: KnownTer
 
 function listing(row: ImportCompany, previews: Map<string, string>) {
   return row.files
+    .filter((f) => !f.leftOut)
     .map((f) => {
       const head = `- ${f.id}: ${f.path} (${f.kind}${f.pages ? `, ${f.pages} pages` : ''})`;
       if (f.result === 'Could not read') return `${head}: could not be read (${f.note})`;
@@ -757,7 +760,8 @@ export async function runCompany(rowId: string, options: RunOptions) {
   // Survey: open each waiting file once for its page count and first lines.
   const previews = new Map<string, string>();
   for (const file of row.files) {
-    if (file.result === 'Could not read' || row.run.done.includes(file.id)) continue;
+    if (file.leftOut || file.result === 'Could not read' || row.run.done.includes(file.id))
+      continue;
     try {
       const opened = await open(ctx, file);
       file.pages =
@@ -836,6 +840,9 @@ export async function runCompany(rowId: string, options: RunOptions) {
         } catch (error) {
           if (error instanceof ToolProblem || error instanceof ReadError)
             output = `Not saved: ${error.message}`;
+          // A stored copy that has gone missing since an earlier read: tell the agent and go on.
+          else if (error instanceof DomainError && error.code === 'STORAGE')
+            output = `Not saved: ${error.message} Carry on without this file.`;
           else if (error instanceof SyntaxError)
             output = 'Not saved: the arguments were not valid JSON.';
           else throw error;

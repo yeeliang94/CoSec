@@ -46,6 +46,13 @@ export async function GET(request: Request, { params }: Params) {
         throw e;
       }
     });
+  // The original file shows identity numbers and birth dates as written; only the masked text
+  // above is for staff without view_identity.
+  if (!unmasked)
+    return Response.json(
+      { error: 'You need permission to see identity details to open the original file.' },
+      { status: 403, headers: { 'Cache-Control': 'private, no-store' } },
+    );
   const ext = file.name.split('.').pop()!.toLowerCase();
   const type = INLINE[ext];
   return new Response(new Uint8Array(bytes), {

@@ -848,7 +848,14 @@
       "y": 10000,
       "w": 1440,
       "h": 900,
-      "title": "Company review: shares and charges"
+      "title": "Company review: shares"
+    },
+    "ImportReviewCharges.dc.html": {
+      "x": 16720,
+      "y": 10000,
+      "w": 1440,
+      "h": 900,
+      "title": "Company review: charges"
     },
     "ImportApply.dc.html": {
       "x": 13680,
@@ -1038,6 +1045,7 @@
     "ImportReview.dc.html",
     "ImportReviewPeople.dc.html",
     "ImportReviewShares.dc.html",
+    "ImportReviewCharges.dc.html",
     "ImportReviewAddresses.dc.html",
     "ImportReviewBusiness.dc.html",
     "ImportReviewFiles.dc.html",

@@ -1430,3 +1430,171 @@ it('lets the reviewer correct a person, role and holding, and keeps the correcti
   const entries = await readShareEntries(applied.applied!.companyId);
   expect(entries.map((e) => e.shares)).toEqual(['60000']);
 });
+
+it('renames someone already in the app only when the reviewer corrected the name', async () => {
+  const pid = randomMyKad('870707');
+  const reg = () => `2026${String(Date.now()).slice(-8)}`;
+  const resakLike = (folder: string, fullName: string) =>
+    scripted({
+      [folder]: (ids) => [
+        [
+          ...company(ids, {
+            name: `${folder} Sdn. Bhd.`,
+            registrationNumber: reg(),
+            incorporationDate: '2025-01-05',
+            financialYearEnd: '12-31',
+            registeredLine1: '1 Jalan Kekal',
+            industry: 'G',
+            registeredPostcode: '50450',
+            registeredTown: 'Kuala Lumpur',
+            registeredState: 'W.P. KUALA LUMPUR',
+            registeredCountry: 'MALAYSIA',
+          }),
+          {
+            name: 'suggest_person',
+            args: {
+              ref: 'P1',
+              kind: 'individual',
+              full_name: fullName,
+              values: { identityType: 'MyKad', identityNumber: pid },
+              effective_date: null,
+              ...src(ids['Form'], fullName),
+            },
+          },
+          classify(ids),
+        ],
+      ],
+    });
+  const applyRow = async (id: string, rowId: string) =>
+    applyImportCompany(actor, id, rowId, {
+      expectedRevision: (await readRow(rowId)).revision,
+      requestId: randomUUID(),
+    });
+  // First import creates the person.
+  const first = await freshImport('Kekal', { mode: 'new' });
+  await tickImports(resakLike('Kekal', 'Kekal Person'));
+  await settleImports();
+  await applyRow(first.importId, first.rowId);
+  const { findByIdentity } = await import('../src/server/imports/store');
+  const id0 = String((await findByIdentity(actor, 'MyKad', pid))[0]?.personId);
+  const nameNow = async () =>
+    (await db.select().from(s.people).where(eq(s.people.id, id0)))[0].data.fullName;
+  expect(await nameNow()).toBe('Kekal Person');
+
+  // A shorter name in the files alone does not rename them.
+  const second = await freshImport('Kekal Dua', { mode: 'new' });
+  await tickImports(resakLike('Kekal Dua', 'K. Person'));
+  await settleImports();
+  await applyRow(second.importId, second.rowId);
+  expect(await nameNow()).toBe('Kekal Person');
+
+  // The reviewer's correction does.
+  const third = await freshImport('Kekal Tiga', { mode: 'new' });
+  await tickImports(resakLike('Kekal Tiga', 'Kekal Persn'));
+  await settleImports();
+  let row = await readRow(third.rowId);
+  const sug = row.suggestions.find((x) => x.kind === 'person')!;
+  row = await changeImportRow(actor, third.importId, third.rowId, {
+    action: 'correct',
+    expectedRevision: row.revision,
+    suggestionId: sug.id,
+    fields: { fullName: 'Kekal Person bin Ali', identityType: 'MyKad', identityNumber: pid },
+  });
+  await applyRow(third.importId, third.rowId);
+  expect(await nameNow()).toBe('Kekal Person bin Ali');
+});
+
+it('keeps a left-out file away from the agent, and masks identity numbers in its notes', async () => {
+  const pid = randomMyKad('880808');
+  const batch = await createImport(actor, {
+    requestId: randomUUID(),
+    name: 'Fix check Leave out',
+    looseFiles: 0,
+    folders: [{ folder: 'Lepas', target: { mode: 'existing', companyId: existingId } }],
+  });
+  const id = batch.id;
+  const rowId = (await getImport(actor, id)).companies[0].id;
+  await upload(id, rowId, 'Form 9.docx', await wordFile(['Lepas source']));
+  await upload(id, rowId, 'Other.docx', await wordFile(['Another company entirely']));
+  await changeImport(actor, id, { action: 'start' });
+  const script = scripted({
+    Lepas: (ids, round) =>
+      round === 1
+        ? [
+            [
+              classify(ids),
+              {
+                name: 'classify_file',
+                args: {
+                  file_id: ids['Other.docx'],
+                  read_as: 'Letter',
+                  about: 'another_company',
+                  other_company_name: `Holder of ${pid}`,
+                },
+              },
+              { name: 'finish', args: { summary: `Read for ${pid}.`, not_found: [`ID ${pid}`] } },
+            ],
+          ]
+        : [[classify(ids)]],
+  });
+  await tickImports(script);
+  await settleImports();
+  let row = await readRow(rowId);
+  const other = row.files.find((f) => f.name === 'Other.docx')!;
+  const limited = {
+    ...actor,
+    capabilities: actor.capabilities.filter((c) => c !== 'view_identity'),
+  };
+  const masked = (await getImportCompany(limited, id, rowId)).row;
+  expect(JSON.stringify(masked.run)).not.toContain(pid.slice(6));
+  expect(JSON.stringify(masked.files)).not.toContain(pid.slice(6));
+  const batchView = await getImport(limited, id);
+  expect(JSON.stringify(batchView.files)).not.toContain(pid.slice(6));
+
+  await changeImportRow(actor, id, rowId, { action: 'move_file', fileId: other.id, toRowId: null });
+  row = await readRow(rowId);
+  const before = script.requests.length;
+  await changeImportRow(actor, id, rowId, { action: 'run_again', expectedRevision: row.revision });
+  await tickImports(script);
+  await settleImports();
+  const opening = String((script.requests[before].input[0] as { content: string }).content);
+  expect(opening).not.toContain(other.id);
+  expect((await readRow(rowId)).files.find((f) => f.id === other.id)).toMatchObject({
+    result: 'Not used',
+    leftOut: true,
+  });
+});
+
+it('marks a file whose stored copy is missing as unreadable instead of leaving the company stuck', async () => {
+  const { importFilePath } = await import('../src/server/imports/store');
+  const { unlink } = await import('node:fs/promises');
+  const { importId: id, rowId } = await freshImport('Hilang', {
+    mode: 'existing',
+    companyId: existingId,
+  });
+  const file = (await readRow(rowId)).files[0];
+  await unlink(importFilePath(id, file.storageKey));
+  await tickImports(scripted({ Hilang: () => [] }));
+  await settleImports();
+  const row = await readRow(rowId);
+  expect(row.status).not.toBe('Reading');
+  expect(row.files[0].result).toBe('Could not read');
+});
+
+it('discards an import whose upload was cancelled, and refuses to discard a started one', async () => {
+  const batch = await createImport(actor, {
+    requestId: randomUUID(),
+    name: 'Fix check Cancelled',
+    looseFiles: 0,
+    folders: [{ folder: 'Batal', target: { mode: 'new' } }],
+  });
+  const rowId = (await getImport(actor, batch.id)).companies[0].id;
+  await upload(batch.id, rowId, 'Form 9.docx', await wordFile(['Batal source']));
+  await changeImport(actor, batch.id, { action: 'discard' });
+  await expect(getImport(actor, batch.id)).rejects.toThrow('Import access is unavailable.');
+  const started = await freshImport('Mula', { mode: 'new' });
+  await expect(changeImport(actor, started.importId, { action: 'discard' })).rejects.toThrow(
+    'Only an import that has not started can be discarded.',
+  );
+  await settleImports();
+});

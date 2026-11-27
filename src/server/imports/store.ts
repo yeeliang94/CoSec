@@ -46,9 +46,12 @@ export function importFilePath(importId: string, storageKey: string) {
 }
 export async function readImportBytes(importId: string, file: ImportFile) {
   if (!file.storageKey) throw new DomainError('This file was not kept.', 'NOT_FOUND', 404);
+  // A missing or unreadable copy is a handled problem, so callers can report it, not hang on it.
   const bytes = await readFile(
     /* turbopackIgnore: true */ importFilePath(importId, file.storageKey),
-  );
+  ).catch(() => {
+    throw new DomainError('The stored copy of this file is missing.', 'STORAGE', 503);
+  });
   if (createHash('sha256').update(bytes).digest('hex') !== file.sha256)
     throw new DomainError('The stored file failed its integrity check.', 'STORAGE', 503);
   return bytes;
@@ -148,7 +151,7 @@ export async function listImports(actor: Actor) {
 
 export async function getImport(actor: Actor, id: string) {
   const batch = await readBatch(actor, id);
-  const rows = await batchRows(id);
+  const rows = (await batchRows(id)).map((row) => rowForActor(actor, row));
   const settings = importSettingsOf(await getSettings());
   return {
     batch,
@@ -391,6 +394,15 @@ export function maskRow(row: ImportCompany): ImportCompany {
       if (c.source) c.source.quote = maskIdentities(c.source.quote, known);
     }
   }
+  // The agent writes these in its own words, so they may repeat a number it read.
+  for (const f of copy.files) {
+    f.readAs = maskIdentities(f.readAs, known);
+    f.note = maskIdentities(f.note, known);
+    if (f.otherCompany) f.otherCompany = maskIdentities(f.otherCompany, known);
+  }
+  copy.run.summary = maskIdentities(copy.run.summary, known);
+  copy.run.notFound = copy.run.notFound.map((n) => maskIdentities(n, known));
+  if (copy.run.error) copy.run.error = maskIdentities(copy.run.error, known);
   return copy;
 }
 export const rowForActor = (actor: Actor, row: ImportCompany) =>
@@ -573,7 +585,7 @@ export async function addImportFile(
 }
 
 export const batchActionInput = z.object({
-  action: z.enum(['start', 'pause', 'resume']),
+  action: z.enum(['start', 'pause', 'resume', 'discard']),
 });
 export async function changeImport(
   actor: Actor,
@@ -581,6 +593,7 @@ export async function changeImport(
   input: z.infer<typeof batchActionInput>,
 ) {
   assertCapability(actor, 'prepare_job');
+  if (input.action === 'discard') return discardImport(actor, id);
   return transaction(async (tx) => {
     const batch = structuredClone(await readBatch(actor, id, tx));
     if (input.action === 'start') {
@@ -606,6 +619,20 @@ export async function changeImport(
       .where(eq(s.imports.id, id));
     return batch;
   });
+}
+
+/** Removes an import whose upload was cancelled before it started; nothing was read from it. */
+async function discardImport(actor: Actor, id: string) {
+  const batch = await transaction(async (tx) => {
+    const found = await readBatch(actor, id, tx);
+    if (found.status !== 'Uploading')
+      throw new DomainError('Only an import that has not started can be discarded.');
+    await tx.delete(s.importCompanies).where(eq(s.importCompanies.importId, id));
+    await tx.delete(s.imports).where(eq(s.imports.id, id));
+    return found;
+  });
+  await removeImportFiles(id);
+  return batch;
 }
 
 export const rowActionInput = z.discriminatedUnion('action', [
@@ -708,7 +735,9 @@ export async function changeImportRow(
       if (input.toRowId === null) {
         file.result = 'Not used';
         file.note = 'left out by you';
+        file.leftOut = true;
       } else {
+        delete file.leftOut;
         if (input.toRowId === row.id) {
           file.result = 'Waiting';
           file.note = '';

@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Drawer } from '@/components/resolution/drawer';
 import { WarningLine } from '@/components/warning-line';
 import { formatDay, useWorkspace } from '@/components/workspace';
@@ -51,6 +51,24 @@ export function NewImport({
   const sent = useRef(new Set<string>());
   const requestId = useRef(crypto.randomUUID());
   const input = useRef<HTMLInputElement>(null);
+  // Closing the drawer stops the upload: no more files are sent and reading never starts.
+  // An import created here but never started is discarded, so no half-uploaded import is left.
+  const closed = useRef<AbortController | null>(null);
+  const startSent = useRef(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    closed.current = controller;
+    return () => {
+      controller.abort();
+      if (batchId.current && !startSent.current)
+        void fetch(`/api/imports/${batchId.current}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'discard' }),
+          keepalive: true,
+        }).catch(() => undefined);
+    };
+  }, []);
   const companies = useMemo(() => data?.companies ?? [], [data]);
   const grouped = useMemo(() => (picked ? groupFolderFiles(picked) : null), [picked]);
 
@@ -87,6 +105,7 @@ export function NewImport({
       .filter((f) => targetOf(f.name) !== 'leave_out')
       .flatMap((f) => f.files.map((file) => ({ folder: f.name, ...file })));
     setProgress({ done: sent.current.size, total: files.length });
+    const { signal } = closed.current!;
     try {
       if (!batchId.current) {
         const batch = await postJson<{ id: string }>('/api/imports', {
@@ -97,13 +116,14 @@ export function NewImport({
         });
         batchId.current = batch.id;
       }
+      if (signal.aborted) return;
       const id = batchId.current;
       const view = await getJson<ImportView>(`/api/imports/${id}`);
       const rows = new Map(view.companies.map((c) => [c.folder, c.id]));
       const queue = files.filter((f) => !sent.current.has(f.relativePath));
       let failure: unknown = null;
       async function worker() {
-        while (queue.length && !failure) {
+        while (queue.length && !failure && !signal.aborted) {
           const item = queue.shift()!;
           const form = new FormData();
           form.set('rowId', rows.get(item.folder) ?? '');
@@ -116,6 +136,7 @@ export function NewImport({
             const response = await fetch(`/api/imports/${id}/files`, {
               method: 'POST',
               body: form,
+              signal,
             });
             const body = (await response.json()) as Uploaded & { error?: string };
             if (!response.ok) throw new Error(body.error || 'A file could not be uploaded.');
@@ -127,10 +148,14 @@ export function NewImport({
         }
       }
       await Promise.all(Array.from({ length: PARALLEL }, worker));
+      if (signal.aborted) return;
       if (failure) throw failure;
+      startSent.current = true;
       await postJson(`/api/imports/${id}`, { action: 'start' });
-      onStarted(id);
+      if (!signal.aborted) onStarted(id);
     } catch (e) {
+      startSent.current = false;
+      if (signal.aborted) return;
       setError(`${errorText(e)} Choose Try again to send the remaining files.`);
     }
   }
